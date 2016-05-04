@@ -62,65 +62,81 @@ public class Vector4f {
     }
 
     /**
-     * TODO
      * Returns the product between this vector and a scalar.
      *
      * @param scalar to multiply by.
      * @return the product scalar * this.
      */
     public Vector4f mul(float scalar) {
+        Vector4f v = new Vector4f(this);
+        v.data[0] = scalar*data[0];
+        v.data[1] = scalar*data[1];
+        v.data[2] = scalar*data[2];
+        v.data[3] = scalar*data[3];
 
+        return v;
     }
 
     /**
-     * TODO
      * Returnes the sum between this and the specified vector.
      *
      * @param v vector to add.
      * @return the sum this + v.
      */
     public Vector4f add(Vector4f v) {
+        Vector4f w = new Vector4f(this);
+        w[0] = data[0] + v.data[0];
+        w[1] = data[1] + v.data[1];
+        w[2] = data[2] + v.data[2];
+        w[3] = data[3] + v.data[3];
 
+        return w;
     }
 
     /**
-     * TODO
      * Returnes the difference between this and the specified vector.
      *
      * @param v vector to subtract.
      * @return the difference this - v.
      */
     public Vector4f sub(Vector4f v) {
+        Vector4f w = new Vector4f(this);
+        w[0] = data[0] - v.data[0];
+        w[1] = data[1] - v.data[1];
+        w[2] = data[2] - v.data[2];
+        w[3] = data[3] - v.data[3];
 
+        return w;
     }
 
     /**
-     * TODO
      * Returns the dot product between this and the specified vector.
      *
      * @param v second vector.
      * @return the dot/inner product <this, v>
      */
-    public Vector4f dot(Vector4f v) {
-
+    public float dot(Vector4f v) {
+        return (data[0]*v.data[0])+(data[1]*v.data[1])+(data[2]*v.data[2])+(data[3]*v.data[3]);
     }
 
     /**
-     * TODO
      * Returns the length of this vector.
      *
      * @return the length of this vector.
      */
     public float length() {
-
+        return Math.sqrt( (data[0]*data[0]) + (data[1]*data[1]) + (data[2]*data[2]) + (data[3]*data[3]) );
     }
 
     /**
-     * TODO
      * Normalized this vector.
      */
     public void normalize() {
-
+        float length = length();
+        data[0] = data[0]/length;
+        data[1] = data[1]/length;
+        data[2] = data[2]/length;
+        data[3] = data[3]/length;
     }
 
     /**
