@@ -85,4 +85,15 @@ public class Shader {
 
         glUseProgram(program_handle);
     }
+
+    /**
+     * Destroys this shader program.
+     */
+    public void destroy() {
+        if (program_handle == 0) glDeleteProgram(program_handle);
+
+        for (int shader : shader_handles) {
+            if (shader == 0) glDeleteShader(shader);
+        }
+    }
 }
