@@ -57,9 +57,9 @@ public class Vector4f {
      * @param m matrix to multiply this vector with.
      * @return the vector, matrix product this * m.
      */
-    public Vector4f mul(Matrix4f m) {
+    /**public Vector4f mul(Matrix4f m) {
 
-    }
+    }*/
 
     /**
      * Returns the product between this vector and a scalar.
@@ -85,10 +85,10 @@ public class Vector4f {
      */
     public Vector4f add(Vector4f v) {
         Vector4f w = new Vector4f(this);
-        w[0] = data[0] + v.data[0];
-        w[1] = data[1] + v.data[1];
-        w[2] = data[2] + v.data[2];
-        w[3] = data[3] + v.data[3];
+        w.data[0] = data[0] + v.data[0];
+        w.data[1] = data[1] + v.data[1];
+        w.data[2] = data[2] + v.data[2];
+        w.data[3] = data[3] + v.data[3];
 
         return w;
     }
@@ -101,10 +101,10 @@ public class Vector4f {
      */
     public Vector4f sub(Vector4f v) {
         Vector4f w = new Vector4f(this);
-        w[0] = data[0] - v.data[0];
-        w[1] = data[1] - v.data[1];
-        w[2] = data[2] - v.data[2];
-        w[3] = data[3] - v.data[3];
+        w.data[0] = data[0] - v.data[0];
+        w.data[1] = data[1] - v.data[1];
+        w.data[2] = data[2] - v.data[2];
+        w.data[3] = data[3] - v.data[3];
 
         return w;
     }
@@ -125,7 +125,7 @@ public class Vector4f {
      * @return the length of this vector.
      */
     public float length() {
-        return Math.sqrt( (data[0]*data[0]) + (data[1]*data[1]) + (data[2]*data[2]) + (data[3]*data[3]) );
+        return (float)Math.sqrt( (data[0]*data[0]) + (data[1]*data[1]) + (data[2]*data[2]) + (data[3]*data[3]) );
     }
 
     /**
@@ -149,6 +149,15 @@ public class Vector4f {
         res.normalize();
 
         return res;
+    }
+
+    /**
+     * Returns the data stored in the vector as a float array.
+     *
+     * @return a float array containing the vector data.
+     */
+    public float[] asFloatArray() {
+        return data.clone();
     }
 }
 
