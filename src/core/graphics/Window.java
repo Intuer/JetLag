@@ -3,6 +3,7 @@ package core.graphics;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import static org.lwjgl.opengl.GL11.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -12,6 +13,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * destroy whenever your done with the window.
  *
  * @author Nicklas Hersen
+ * @author Jacob Sörme
  */
 public class Window {
     private static boolean not_first;
@@ -137,4 +139,26 @@ public class Window {
     public void swapBuffers() {
         glfwSwapBuffers(window_handle);
     }
+
+    /**
+     * Set backgound color
+     *
+     * @param r red value
+     * @param g green value
+     * @param b blue value
+     */
+    public void setClearColor(int r, int g, int b){
+        if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
+            throw new IllegalArgumentException("Invalid argument range");
+        }
+        glClearColor((float)r/(float)255,(float)g/(float)255,(float)b/(float)255,1.0f);
+    }
+
+    /**
+     * Clear window from graphics
+     */
+    public void clear(){
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
 }
