@@ -1,7 +1,10 @@
 package core.math;
 
 /**
+ * A vector with four elements of type float
+ *
  * @author Nicklas Hersen
+ * @author Jacob Sörme
  */
 public class Vector4f {
     private float data[];
@@ -57,9 +60,16 @@ public class Vector4f {
      * @param m matrix to multiply this vector with.
      * @return the vector, matrix product this * m.
      */
-    /**public Vector4f mul(Matrix4f m) {
-
-    }*/
+    public Vector4f mul(Matrix4f m) {
+        float[] n = m.asFloatArray();
+        float[] d = new float[4];
+        d[0] = data[0]*n[0] + data[1]*n[1] + data[2]*n[2] + data[3]*n[3];
+        d[1] = data[0]*n[4] + data[1]*n[5] + data[2]*n[6] + data[3]*n[7];
+        d[2] = data[0]*n[8] + data[1]*n[9] + data[2]*n[10] + data[3]*n[11];
+        d[3] = data[0]*n[12] + data[1]*n[13] + data[2]*n[14] + data[3]*n[15];
+        Vector4f w = new Vector4f(d);
+        return w;
+    }
 
     /**
      * Returns the product between this vector and a scalar.
