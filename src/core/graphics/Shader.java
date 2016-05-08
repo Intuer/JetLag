@@ -1,5 +1,7 @@
 package core.graphics;
 
+import core.math.Matrix4f;
+
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 
@@ -95,5 +97,24 @@ public class Shader {
         for (int shader : shader_handles) {
             if (shader == 0) glDeleteShader(shader);
         }
+    }
+
+    /**
+     * Returns a handle to the specified uniform location.
+     *
+     * @return a handle to the specified uniform.
+     */
+    public int getUniformLocation(String name) {
+        return glGetUniformLocation(program_handle, name);
+    }
+
+    /**
+     * Sets the specified 4 dimensional matrix to the specified value.
+     *
+     * @param location uniform handle.
+     * @param m value to copy.
+     */
+    public void setUniform(int location, Matrix4f m) {
+        glUniformMatrix4fv(location, false, m.asFloatArray());
     }
 }
