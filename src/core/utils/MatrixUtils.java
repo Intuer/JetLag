@@ -58,8 +58,8 @@ public class MatrixUtils {
         float c = (float) cos(amount);
 
         float data[] = { 1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, c, s, 0.0f, 0.0f,
-                0.0f, -s, c, 0.0f,
+                0.0f, c, s, 0.0f,
+                0.0f, -s, c, 1.0f,
                 0.0f, 0.0f, 0.0f, 1.0f };
 
         return new Matrix4f(data);
