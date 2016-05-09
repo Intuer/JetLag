@@ -30,7 +30,7 @@ public abstract class BasicObject {
      *
      * @return the position of this object.
      */
-    public Vector3 getPos() { return pos; }
+    public Vector3 getPosition() { return pos; }
 
     /**
      * Moves this object along the specified axis.
@@ -39,7 +39,7 @@ public abstract class BasicObject {
      * @param y moves the object along the y-axis.
      * @param z moves the object along the z-axis.
      */
-    public void addPos(float x, float y, float z) { pos.add(x, y, z); }
+    public void addPosition(float x, float y, float z) { pos.add(x, y, z); }
 
     /**
      * Returns the texture of this object.
