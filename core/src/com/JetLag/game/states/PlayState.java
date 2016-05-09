@@ -102,7 +102,7 @@ public class PlayState extends State {
             angle = (float)Math.PI + angle;
         //Fourth quadrant
         else
-            angle = (float)Math.PI - angle;
+            angle = (float)(2*Math.PI) - angle;
 
         return angle;
     }
