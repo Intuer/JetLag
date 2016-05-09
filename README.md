@@ -13,7 +13,7 @@
 ######Commit emojis and their meaning: 
 - :bug: Commit regarding bug. Should be fulfilled with rest of message, eg. *fixed* or *removed*. 
   - :bug: Fixed bug in Yolo, method swag()
-- :hammer_and_wrench: Commit regarding feature. Should be be used together with text message. 
-  - :hammer_and_wrench: Added feature of swag control in Swag
+- :hammer: Commit regarding feature. Should be be used together with text message. 
+  - :hammer: Added feature of swag control in Swag
 - :book: Commit regarding documentation of code. Should be specified where. 
   - :book: Documentation added in Yolo
