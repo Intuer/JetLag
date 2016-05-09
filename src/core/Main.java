@@ -1,10 +1,10 @@
 package core;
-import java.util.Arrays;
-import java.util.Vector;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
 
-import core.graphics.Window;
+import core.graphics.*;
 import core.math.Matrix4f;
-import core.math.Vector4f;
+import core.utils.MatrixUtils;
 
 /**
  * The Main class. Controls the main functions of the game
@@ -18,7 +18,6 @@ public class Main {
      * Initialises the game and it's functions
      */
     public void setup() {
-
     }
 
     /**
@@ -35,17 +34,52 @@ public class Main {
      * @param args
      */
     public static void main(String args[]){
-        Window wc = new Window(800,500,"JetLag");
+        Window wc = new Window(800, 500, "JetLag");
         wc.bindContext();
-        wc.setClearColor(120,50,98);
+        wc.setClearColor(0,0,0);
+
+        Shader s = new Shader();
 
         wc.show();
+
+        // Create a simple shader
+        String vs = "#version 330\n layout(location=0) in vec3 pos;\n layout(location=1) in vec2 tcoord;\n uniform mat4 translation;\n uniform mat4 rotation;\n uniform mat4 scale;\n varying vec2 coords;\n void main() {\n coords = tcoord;\n gl_Position = translation * rotation * scale * vec4(pos, 1.0f);\n }\n";
+        String fs = "#version 330\n uniform sampler2D samp;\n varying vec2 coords;\n void main() {\n gl_FragColor = texture(samp, coords);\n}\n";
+        s.loadShader(vs, GL_VERTEX_SHADER);
+        s.loadShader(fs, GL_FRAGMENT_SHADER);
+        s.useProgram();
+
+        int uni = s.getUniformLocation("translation");
+        int uni3 = s.getUniformLocation("rotation");
+        int uni2 = s.getUniformLocation("scale");
+
+
+        Sprite sp = new Sprite(1, 1, "C:\\Users\\Nicklas Hersén\\Pictures\\test.png");
+        Sprite sp2 = new Sprite(2, 1, "C:\\Users\\Nicklas Hersén\\Pictures\\test2.png");
 
         while(!wc.shouldWindowClose()){
             wc.pollEvents();
             wc.clear();
+
+            s.setUniform(uni, MatrixUtils.translate(0, 0.5f, 0));
+            s.setUniform(uni2, new Matrix4f());
+            sp.mesh.rotate(0, (float) Math.PI / 100, 0);
+            s.setUniform(uni3, sp.mesh.getRotationMatrix());
+
+            sp.draw();
+
+            s.setUniform(uni3, new Matrix4f());
+            s.setUniform(uni, MatrixUtils.translate(0, -0.5f, 0));
+
+            sp2.draw();
+
             wc.swapBuffers();
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {}
         }
+
+        s.destroy();
         wc.destroy();
     }
 
