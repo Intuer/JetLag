@@ -32,8 +32,8 @@ public abstract class PhysObject extends BasicObject {
      *
      * @return the velocity of the object.
      */
-    public float getVelocity() {
-        return vel.len();
+    public Vector3 getVelocity() {
+        return vel;
     }
 
     /**
@@ -41,8 +41,8 @@ public abstract class PhysObject extends BasicObject {
      *
      * @return the objects velocity vector.
      */
-    public Vector3 getVelocityVector() {
-        return vel;
+    public float getVelocityLen() {
+        return vel.len();
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class PhysObject extends BasicObject {
      *
      * @param vec new velocity vector
      */
-    public void setVelocityVector(Vector3 vec) {
+    public void setVelocity(Vector3 vec) {
         this.vel = vec;
     }
 
