@@ -54,8 +54,8 @@ public class Main {
         int uni2 = s.getUniformLocation("scale");
 
 
-        Sprite sp = new Sprite(1, 1, "C:\\Users\\Nicklas Hersén\\Pictures\\test.png");
-        Sprite sp2 = new Sprite(2, 1, "C:\\Users\\Nicklas Hersén\\Pictures\\test2.png");
+        Sprite sp = new Sprite(1, 1, "res\\test.png");
+        Sprite sp2 = new Sprite(2, 1, "res\\test2.png");
 
         while(!wc.shouldWindowClose()){
             wc.pollEvents();
