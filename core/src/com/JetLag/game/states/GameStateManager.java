@@ -1,4 +1,4 @@
-package com.jetlag.game.states;
+package com.JetLag.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

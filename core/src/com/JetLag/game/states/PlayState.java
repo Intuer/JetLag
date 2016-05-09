@@ -1,10 +1,10 @@
-package com.jetlag.game.states;
+package com.JetLag.game.states;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.jetlag.game.sprites.Planet;
+import com.JetLag.game.sprites.Planet;
 
 import java.util.Random;
 

@@ -1,12 +1,12 @@
-package com.jetlag.game;
+package com.JetLag.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jetlag.game.states.GameStateManager;
-import com.jetlag.game.states.MenuState;
+import com.JetLag.game.states.GameStateManager;
+import com.JetLag.game.states.MenuState;
 
 public class JetLag extends ApplicationAdapter {
 	public static final int WIDTH = 700;

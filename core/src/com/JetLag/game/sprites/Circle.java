@@ -1,4 +1,4 @@
-package com.jetlag.game.sprites;
+package com.JetLag.game.sprites;
 
 import com.badlogic.gdx.math.Vector3;
 

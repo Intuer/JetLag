@@ -1,9 +1,9 @@
-package com.jetlag.game.states;
+package com.JetLag.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jetlag.game.JetLag;
+import com.JetLag.game.JetLag;
 
 /**
  * Created by jacob_000 on 2016-05-08.
