@@ -28,6 +28,21 @@ public abstract class PhysObject extends BasicObject {
     }
 
     /**
+     * Initializes the object with some basic properties.
+     *
+     * @param x position along the x-axis.
+     * @param y position along the y-axis.
+     * @param mass object mass.
+     * @param vel object velocity.
+     */
+    public PhysObject(int x, int y, float mass, Vector3 vel, float[] colour) {
+        super(x, y, colour);
+        this.mass = mass;
+        this.vel = vel;
+        this.colour = colour;
+    }
+
+    /**
      * Returns the velocity of the object.
      *
      * @return the velocity of the object.

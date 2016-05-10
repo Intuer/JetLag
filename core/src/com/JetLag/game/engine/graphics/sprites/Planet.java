@@ -31,6 +31,6 @@ public class Planet extends PhysObject implements RObject {
     }
 
     public void render(SpriteBatch sp) {
-        sp.draw(texture, pos.x - radius, (pos.y - radius*(700/500)), pos.x + radius, (pos.y + radius*700/500));
+        sp.draw(texture, pos.x - radius, pos.y - radius, 2*radius, 2*radius);
     }
 }

@@ -9,8 +9,8 @@ import com.JetLag.game.engine.states.GameStateManager;
 import com.JetLag.game.engine.states.MenuState;
 
 public class JetLag extends ApplicationAdapter {
-	public static final int WIDTH = 700;
-	public static final int HEIGHT = 500;
+	public static final int WIDTH = 1300;
+	public static final int HEIGHT = 900;
 	public static final String TITLE = "Jet Lag";
 
 	private GameStateManager gsm;
