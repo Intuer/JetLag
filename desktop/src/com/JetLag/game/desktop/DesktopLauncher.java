@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.width = JetLag.WIDTH;
 		config.height = JetLag.HEIGHT;
 		config.title = JetLag.TITLE;
+		config.resizable = false;
 		new LwjglApplication(new JetLag(), config);
 	}
 }
