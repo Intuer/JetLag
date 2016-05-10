@@ -1,4 +1,4 @@
-package com.JetLag.game.states;
+package com.JetLag.game.engine.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
