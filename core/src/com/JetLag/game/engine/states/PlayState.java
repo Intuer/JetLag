@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.JetLag.game.engine.graphics.sprites.Planet;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -20,7 +21,7 @@ public class PlayState extends State {
 
     private Texture background;
     private OrthographicCamera camera;
-    private Circle[] planets;
+    private ArrayList<Circle> planets;
     private Random rand;
     private ShapeRenderer sr;
     private GravityManager gm;
@@ -30,6 +31,8 @@ public class PlayState extends State {
         rand = new Random();
         background = new Texture("background.png");
         sr = new ShapeRenderer();
+        planets = new ArrayList<Circle>();
+        gm = GravityManager.getInstance();
     }
 
     @Override
@@ -49,7 +52,6 @@ public class PlayState extends State {
         sb.begin();
         //sb.draw(background,0,0,JetLag.WIDTH, JetLag.HEIGHT);
         sb.end();
-        gm.update();
         for( Circle p : planets){
             p.render(sr);
         }
