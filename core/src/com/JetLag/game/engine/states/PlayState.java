@@ -32,7 +32,13 @@ public class PlayState extends State {
         background = new Texture("background.png");
         sr = new ShapeRenderer();
         planets = new ArrayList<Circle>();
+        planets.add(new Circle(1100,700,1000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},150));
+        planets.add(new Circle(300,400,1000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},150));
+        planets.add(new Circle(400,100,100,new Vector3(22,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
         gm = GravityManager.getInstance();
+        gm.registerPassive(planets.get(0));
+        gm.registerPassive(planets.get(1));
+        gm.registerActive(planets.get(2));
     }
 
     @Override
