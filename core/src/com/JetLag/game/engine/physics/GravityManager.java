@@ -13,7 +13,12 @@ import java.util.List;
 public class GravityManager {
     protected static GravityManager _instance = null;
     protected double threshold;
+
+    // This alters the total force between the two objects.
     protected float Gconst;
+
+    // This alters the speed of the simulation
+    protected float base_timescale;
 
     protected List<PhysObject> passives;
     protected List<PhysObject> actives;
@@ -33,6 +38,7 @@ public class GravityManager {
 
         threshold = 10;
         Gconst = -0.00001f;
+        base_mult = 15;
     }
 
     /**
@@ -107,14 +113,16 @@ public class GravityManager {
      * @param delta
      */
     public void update(PhysObject obj, float delta) {
+        delta *= base_timescale;
+
         for (PhysObject pObj : passives) {
             Vector3 fdir = new Vector3(obj.getPosition());
             fdir.sub(pObj.getPosition());
 
-            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass() / (fdir.len() * fdir.len()));
+            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass()).scl(delta);
 
             obj.getVelocity().add(fdir);
-            obj.getPosition().add(obj.getVelocity());
+            obj.getPosition().add((obj.getVelocity()).cpy().scl(delta));
         }
     }
 
