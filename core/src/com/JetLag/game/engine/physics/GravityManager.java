@@ -111,7 +111,7 @@ public class GravityManager {
             Vector3 fdir = new Vector3(obj.getPosition());
             fdir.sub(pObj.getPosition());
 
-            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass() / fdir.len());
+            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass() / (fdir.len() * fdir.len()));
 
             obj.getVelocity().add(fdir);
             obj.getPosition().add(obj.getVelocity());
