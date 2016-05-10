@@ -1,6 +1,7 @@
 package com.JetLag.game.engine.physics;
 
 import com.JetLag.game.engine.PhysObject;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.List;
  * @version 05.09.2016
  */
 public class GravityManager {
-    protected GravityManager _instance = null;
-    protected float threshold;
+    protected static GravityManager _instance = null;
+    protected double threshold;
+    protected float Gconst;
 
     protected List<PhysObject> passives;
     protected List<PhysObject> actives;
@@ -30,6 +32,7 @@ public class GravityManager {
         actives = new LinkedList<PhysObject>();
 
         threshold = 10;
+        Gconst = -0.00001f;
     }
 
     /**
@@ -38,7 +41,7 @@ public class GravityManager {
      *
      * @return a gravity manager instance.
      */
-    public GravityManager getInstance() {
+    public static GravityManager getInstance() {
         if (_instance == null) _instance = new GravityManager();
 
         return _instance;
@@ -94,20 +97,34 @@ public class GravityManager {
         throw new IllegalArgumentException("Invalid hint type!");
     }
 
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
+
     /**
      *
      * @param obj
      * @param delta
      */
-    public void update(PhysObject obj, long delta) {
+    public void update(PhysObject obj, float delta) {
+        for (PhysObject pObj : passives) {
+            Vector3 fdir = new Vector3(obj.getPosition());
+            fdir.sub(pObj.getPosition());
 
+            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass() / fdir.len());
+
+            obj.getVelocity().add(fdir);
+            obj.getPosition().add(obj.getVelocity());
+        }
     }
 
     /**
      *
      * @param delta
      */
-    public void update(long delta) {
-
+    public void update(float delta) {
+        for (PhysObject obj : actives) {
+            update(obj, delta);
+        }
     }
 }
