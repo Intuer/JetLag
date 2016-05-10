@@ -1,10 +1,12 @@
 package com.JetLag.game.engine.states;
 
+import com.JetLag.game.JetLag;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.JetLag.game.engine.sprites.Planet;
+import com.JetLag.game.engine.graphics.sprites.Planet;
 
 import java.util.Random;
 
@@ -16,6 +18,7 @@ public class PlayState extends State {
     private static final float G = 0.001f;
 
     private Texture background;
+    private OrthographicCamera camera;
     private Planet planet;
     private Planet[] planets;
     private Random rand;
@@ -23,17 +26,18 @@ public class PlayState extends State {
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
-        planet = new Planet(300,200,500000000,new Vector3(0,0,0));
+        planet = new Planet(300,200, 100, 500000000,new Vector3(0,0,0));
         rand = new Random();
         planets = new Planet[2];
         planets[0] = planet;
-        Planet p2 = new Planet(250,50,500,new Vector3(400,0,0));
+        Planet p2 = new Planet(250,50, 200, 500,new Vector3(400,0,0));
         planets[1] = p2;
         //for (int i = 0; i < 10; i++){
         //    planets[i] = new Planet(rand.nextInt(JetLag.WIDTH),rand.nextInt(JetLag.HEIGHT),50 );
         //}
         background = new Texture("background.png");
         sr = new ShapeRenderer();
+        camera = new OrthographicCamera(JetLag.WIDTH, JetLag.HEIGHT);
     }
 
     @Override
@@ -63,10 +67,11 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background,0,0);
+
         for( Planet p : planets){
-            sb.draw(p.getTexture(), p.getPosition().x, p.getPosition().y);
+            p.render(sb);
         }
-        sb.draw(planet.getTexture(),planet.getPosition().x, planet.getPosition().y);
+        planet.render(sb);
         sb.end();
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(1,1,0,1);

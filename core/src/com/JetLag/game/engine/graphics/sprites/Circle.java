@@ -1,5 +1,8 @@
 package com.JetLag.game.engine.graphics.sprites;
 
+import com.JetLag.game.engine.graphics.RObject;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -20,5 +23,4 @@ public class Circle {
         this.colour = colour;
         this.mass = mass;
     }
-
 }

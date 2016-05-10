@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.JetLag.game.states.GameStateManager;
-import com.JetLag.game.states.MenuState;
+import com.JetLag.game.engine.states.GameStateManager;
+import com.JetLag.game.engine.states.MenuState;
 
 public class JetLag extends ApplicationAdapter {
 	public static final int WIDTH = 700;
