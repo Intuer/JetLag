@@ -26,9 +26,9 @@ public class Circle extends PhysObject {
     public void render(ShapeRenderer sr) {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(0,0,0,1);
-        sr.circle(pos.x-radius/2,pos.y-radius/2,radius);
+        sr.circle(pos.x,pos.y,radius);
         sr.setColor(colour[0],colour[1],colour[2],1);
-        sr.circle(pos.x-radius/2,pos.y-radius/2,radius-3);
+        sr.circle(pos.x,pos.y,radius-3);
         sr.end();
     }
 }
