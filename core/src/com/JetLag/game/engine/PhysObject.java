@@ -1,5 +1,6 @@
 package com.JetLag.game.engine;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -94,5 +95,9 @@ public abstract class PhysObject extends BasicObject {
      */
     public void setMass(float mass) {
         this.mass = mass;
+    }
+
+    public void render(ShapeRenderer sr){
+
     }
 }

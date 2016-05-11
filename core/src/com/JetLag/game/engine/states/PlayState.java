@@ -1,7 +1,9 @@
 package com.JetLag.game.engine.states;
 
 import com.JetLag.game.JetLag;
+import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.sprites.Circle;
+import com.JetLag.game.engine.graphics.sprites.Player;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,8 +24,9 @@ import java.util.Random;
 public class PlayState extends State {
 
     private Texture background;
-    private ArrayList<Circle> planets;
+    private ArrayList<PhysObject> planets;
     private Random rand;
+    private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
 
@@ -32,12 +35,15 @@ public class PlayState extends State {
         rand = new Random();
         background = new Texture("background.png");
         sr = new ShapeRenderer();
-        planets = new ArrayList<Circle>();
+        planets = new ArrayList<PhysObject>();
         planets.add(new Circle(0,0,1000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         planets.add(new Circle(700,10,100,new Vector3(0,30,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
+        player = new Player(700,300,100,new Vector3(0,0,0),new float[]{0.4f,0.4f,0.4f});
+        planets.add(player);
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
+        gm.registerActive(planets.get(2));
         cam.setToOrtho(false,JetLag.WIDTH / 1, JetLag.HEIGHT / 1);
     }
 
@@ -47,9 +53,16 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            cam.translate(0,2);
-            cam.update();
-            System.out.print(cam.position.y);
+            player.setVelocity(player.getVelocity().add(0,2,0));
+        }
+        if ( Gdx.input.isKeyPressed(Input.Keys.DOWN) ){
+            player.setVelocity(player.getVelocity().add(0,-2,0));
+        }
+        if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ){
+            player.setVelocity(player.getVelocity().add(2,0,0));
+        }
+        if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ){
+            player.setVelocity(player.getVelocity().add(-2,0,0));
         }
     }
 
@@ -57,6 +70,9 @@ public class PlayState extends State {
     protected void update(float dt) {
         handleInput();
         gm.update(dt);
+        cam.position.x = player.getPosition().x;
+        cam.position.y = player.getPosition().y;
+        cam.update();
     }
 
     @Override
@@ -67,7 +83,7 @@ public class PlayState extends State {
         sb.end();
         sr.setProjectionMatrix(cam.combined);
 
-        for( Circle p : planets){
+        for( PhysObject p : planets){
             p.render(sr);
         }
 

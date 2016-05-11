@@ -23,6 +23,7 @@ public class Circle extends PhysObject {
         return radius;
     }
 
+    @Override
     public void render(ShapeRenderer sr) {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(0,0,0,1);
