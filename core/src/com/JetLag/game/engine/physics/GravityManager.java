@@ -37,7 +37,7 @@ public class GravityManager {
         actives = new LinkedList<PhysObject>();
 
         threshold = 10;
-        Gconst = -0.00001f;
+        Gconst = 1f;
         base_timescale = 15;
     }
 
@@ -113,16 +113,22 @@ public class GravityManager {
      * @param delta
      */
     public void update(PhysObject obj, float delta) {
-        delta *= base_timescale;
 
         for (PhysObject pObj : passives) {
-            Vector3 fdir = new Vector3(obj.getPosition());
-            fdir.sub(pObj.getPosition());
+            Vector3 fdir = new Vector3(pObj.getPosition());
+            fdir.sub(obj.getPosition());
 
-            fdir.nor().scl(Gconst * obj.getMass() * pObj.getMass()).scl(delta);
+            float length = fdir.len();
+            System.out.print(length + "\n");
+
+            fdir.nor();
+            fdir.scl( (float) ( (Gconst * obj.getMass() * pObj.getMass()) / ( Math.pow((double)length,1.8)) ));
+            fdir.scl(delta);
 
             obj.getVelocity().add(fdir);
-            obj.getPosition().add((obj.getVelocity()).cpy().scl(delta));
+            //obj.setVelocity( obj.getVelocity().scl(0.4f).cpy());
+
+            obj.getPosition().add((obj.getVelocity()).cpy());
         }
     }
 

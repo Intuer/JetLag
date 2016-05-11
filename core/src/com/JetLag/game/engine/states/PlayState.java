@@ -36,15 +36,17 @@ public class PlayState extends State {
         background = new Texture("background.png");
         sr = new ShapeRenderer();
         planets = new ArrayList<PhysObject>();
-        planets.add(new Circle(0,0,1000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
-        planets.add(new Circle(700,10,100,new Vector3(0,30,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
-        player = new Player(700,300,400,new Vector3(0,0,0),new float[]{0.4f,0.4f,0.4f});
+        planets.add(new Circle(0,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
+        planets.add(new Circle(1100,0,100,new Vector3(0,22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
+        planets.add(new Circle(1300,0,100,new Vector3(0,-24,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
+        player = new Player(900,0,100,new Vector3(0,5,0),new float[]{0.4f,0.4f,0.4f});
         planets.add(player);
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
         gm.registerActive(planets.get(2));
-        cam.setToOrtho(false,JetLag.WIDTH / 0.5f, JetLag.HEIGHT / 0.5f);
+        gm.registerActive(planets.get(3));
+        cam.setToOrtho(false,JetLag.WIDTH / 0.3f, JetLag.HEIGHT / 0.3f);
     }
 
     @Override

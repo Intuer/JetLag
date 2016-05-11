@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 public class Circle extends PhysObject {
 
     protected int radius;
+    protected int borderwidth = 3;
+    protected int shadewidth = 2;
 
     public Circle(int x, int y, float mass, Vector3 vel, float[] colour, int radius) {
         super(x, y, mass, vel, colour);
@@ -26,10 +28,17 @@ public class Circle extends PhysObject {
     @Override
     public void render(ShapeRenderer sr) {
         sr.begin(ShapeRenderer.ShapeType.Filled);
+
+        //A black border
         sr.setColor(0,0,0,1);
         sr.circle(pos.x,pos.y,radius);
+
+        //The actual circle base
         sr.setColor(colour[0],colour[1],colour[2],1);
-        sr.circle(pos.x,pos.y,radius-3);
+        sr.circle(pos.x,pos.y,radius-borderwidth);
+
+        //Shading
+
         sr.end();
     }
 }

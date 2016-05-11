@@ -20,7 +20,7 @@ public class Player extends PhysObject{
     public void render(ShapeRenderer sr){
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(0.4f,0.4f,0.4f,1);
-        sr.circle(pos.x,pos.y,40);
+        sr.rect(pos.x,pos.y,80,80);
         sr.end();
     }
 
