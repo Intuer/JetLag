@@ -22,7 +22,6 @@ import java.util.Random;
 public class PlayState extends State {
 
     private Texture background;
-    private OrthographicCamera camera;
     private ArrayList<Circle> planets;
     private Random rand;
     private ShapeRenderer sr;
@@ -39,13 +38,18 @@ public class PlayState extends State {
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
-        cam.setToOrtho(false,JetLag.WIDTH, JetLag.HEIGHT);
+        cam.setToOrtho(false,JetLag.WIDTH / 1, JetLag.HEIGHT / 1);
     }
 
     @Override
     protected void handleInput() {
         if ( Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ){
             gsm.push(new PauseState(gsm));
+        }
+        if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
+            cam.translate(0,2);
+            cam.update();
+            System.out.print(cam.position.y);
         }
     }
 
@@ -57,14 +61,16 @@ public class PlayState extends State {
 
     @Override
     protected void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
         Gdx.gl.glClearColor(1,1,1,1);
         sb.begin();
         //sb.draw(background,0,0,JetLag.WIDTH, JetLag.HEIGHT);
         sb.end();
+        sr.setProjectionMatrix(cam.combined);
+
         for( Circle p : planets){
             p.render(sr);
         }
+
     }
 
     @Override
