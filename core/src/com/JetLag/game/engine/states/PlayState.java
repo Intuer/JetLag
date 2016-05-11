@@ -38,13 +38,13 @@ public class PlayState extends State {
         planets = new ArrayList<PhysObject>();
         planets.add(new Circle(0,0,1000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         planets.add(new Circle(700,10,100,new Vector3(0,30,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
-        player = new Player(700,300,100,new Vector3(0,0,0),new float[]{0.4f,0.4f,0.4f});
+        player = new Player(700,300,400,new Vector3(0,0,0),new float[]{0.4f,0.4f,0.4f});
         planets.add(player);
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
         gm.registerActive(planets.get(2));
-        cam.setToOrtho(false,JetLag.WIDTH / 1, JetLag.HEIGHT / 1);
+        cam.setToOrtho(false,JetLag.WIDTH / 0.5f, JetLag.HEIGHT / 0.5f);
     }
 
     @Override
@@ -53,16 +53,16 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            player.setVelocity(player.getVelocity().add(0,2,0));
+            player.setVelocity(player.getVelocity().add(0,1,0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.DOWN) ){
-            player.setVelocity(player.getVelocity().add(0,-2,0));
+            player.setVelocity(player.getVelocity().add(0,-1,0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ){
-            player.setVelocity(player.getVelocity().add(2,0,0));
+            player.setVelocity(player.getVelocity().add(1,0,0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ){
-            player.setVelocity(player.getVelocity().add(-2,0,0));
+            player.setVelocity(player.getVelocity().add(-1,0,0));
         }
     }
 
