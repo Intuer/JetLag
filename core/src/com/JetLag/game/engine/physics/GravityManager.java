@@ -38,7 +38,7 @@ public class GravityManager {
 
         threshold = 10;
         Gconst = -0.00001f;
-        base_mult = 15;
+        base_timescale = 15;
     }
 
     /**
