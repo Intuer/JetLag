@@ -21,26 +21,11 @@ public abstract class PhysObject extends BasicObject {
      * @param mass object mass.
      * @param vel object velocity.
      */
-    public PhysObject(int x, int y, float mass, Vector3 vel, String textureName) {
-        super(x, y, textureName);
+    public PhysObject(int x, int y, float mass, Vector3 vel) {
+        super(x, y);
 
         this.mass = mass;
         this.vel = vel;
-    }
-
-    /**
-     * Initializes the object with some basic properties.
-     *
-     * @param x position along the x-axis.
-     * @param y position along the y-axis.
-     * @param mass object mass.
-     * @param vel object velocity.
-     */
-    public PhysObject(int x, int y, float mass, Vector3 vel, float[] colour) {
-        super(x, y, colour);
-        this.mass = mass;
-        this.vel = vel;
-        this.colour = colour;
     }
 
     /**
@@ -71,6 +56,13 @@ public abstract class PhysObject extends BasicObject {
     }
 
     /**
+     *
+     */
+    public void setVelocity(int x, int y, int z) {
+        setVelocity(new Vector3(x, y, z));
+    }
+
+    /**
      * Adds a vector onto the objects current velocity vector.
      *
      * @param vec vector to add.
@@ -95,9 +87,5 @@ public abstract class PhysObject extends BasicObject {
      */
     public void setMass(float mass) {
         this.mass = mass;
-    }
-
-    public void render(ShapeRenderer sr){
-
     }
 }

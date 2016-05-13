@@ -11,19 +11,15 @@ import com.badlogic.gdx.math.Vector3;
  */
 public abstract class BasicObject {
     protected Vector3 pos;
-    protected Texture texture;
-    protected float[] colour;
 
     /**
      * Initializes the object with some basic parameters.
      *
      * @param x position along the x-axis.
      * @param y position along the y-axis.
-     * @param textureName name of the texture to use.
      */
-    public BasicObject(int x, int y, String textureName) {
+    public BasicObject(int x, int y) {
         pos = new Vector3(x, y, 0);
-        this.texture = new Texture(textureName);
     }
 
     /**
@@ -34,8 +30,6 @@ public abstract class BasicObject {
      */
     public BasicObject(int x, int y, float[] colour) {
         pos = new Vector3(x, y, 0);
-        this.texture = null;
-        this.colour = colour;
     }
 
     /**
@@ -53,11 +47,4 @@ public abstract class BasicObject {
      * @param z moves the object along the z-axis.
      */
     public void addPosition(float x, float y, float z) { pos.add(x, y, z); }
-
-    /**
-     * Returns the texture of this object.
-     *
-     * @return the texture of this object.
-     */
-    public Texture getTexture() { return texture; }
 }
