@@ -47,4 +47,13 @@ public abstract class BasicObject {
      * @param z moves the object along the z-axis.
      */
     public void addPosition(float x, float y, float z) { pos.add(x, y, z); }
+
+    /**
+     * Sets the position of this object.
+     *
+     * @param x position along the x-axis.
+     * @param y position along the y-axis.
+     * @param z position along the z-axis.
+     */
+    public void setPosition(float x, float y, float z) { pos.set(x, y, z); }
 }
