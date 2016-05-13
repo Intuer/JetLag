@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Circle extends PhysObject {
 
     protected int radius;
-    protected int borderwidth = 3;
+    protected int borderwidth = 10;
     protected int shadewidth = 2;
 
     public Circle(int x, int y, float mass, Vector3 vel, float[] colour, int radius) {
