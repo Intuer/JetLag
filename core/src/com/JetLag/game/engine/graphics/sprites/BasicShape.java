@@ -15,5 +15,5 @@ public abstract class BasicShape extends PhysObject {
         this.colour = colour;
     }
 
-    public abstract void draw(ShapeRenderer sr);
+    public abstract void render(ShapeRenderer sr);
 }

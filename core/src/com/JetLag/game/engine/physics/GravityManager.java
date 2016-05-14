@@ -119,7 +119,6 @@ public class GravityManager {
             fdir.sub(obj.getPosition());
 
             float length = fdir.len();
-            System.out.print(length + "\n");
 
             fdir.nor();
             fdir.scl( (float) ( (Gconst * obj.getMass() * pObj.getMass()) / ( Math.pow((double)length,1.8)) ));
