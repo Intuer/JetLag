@@ -99,10 +99,11 @@ public class PlayState extends State {
         //map.drawBackground(sb);
         sr.setProjectionMatrix(cam.combined);
 
-
+        sr.begin(ShapeRenderer.ShapeType.Filled);
         for (PhysObject shape : planets) {
             shape.render(sr);
         }
+        sr.end();
     }
 
     @Override

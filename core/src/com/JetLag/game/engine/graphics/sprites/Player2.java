@@ -26,15 +26,10 @@ public class Player2 extends BasicShape {
 
     public void render(ShapeRenderer sr) {
         //A black border
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-
         sr.setColor(0,0,0,1);
         sr.rect(pos.x-40, pos.y-40, 80,80);
 
         //The actual circle base
-
-
-        sr.end();
     }
 
     public void setVelocity(Vector3 vel){
