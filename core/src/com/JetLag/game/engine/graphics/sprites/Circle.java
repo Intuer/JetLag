@@ -24,7 +24,7 @@ public class Circle extends BasicShape {
         return radius;
     }
 
-    public void render(ShapeRenderer sr) {
+    public void draw(ShapeRenderer sr) {
         //A black border
 
         sr.setColor(0,0,0,1);
