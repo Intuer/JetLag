@@ -3,10 +3,7 @@ package com.JetLag.game.engine.states;
 import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.Map;
-import com.JetLag.game.engine.graphics.sprites.BasicShape;
-import com.JetLag.game.engine.graphics.sprites.Circle;
-import com.JetLag.game.engine.graphics.sprites.Player;
-import com.JetLag.game.engine.graphics.sprites.Player2;
+import com.JetLag.game.engine.graphics.sprites.*;
 import com.JetLag.game.engine.graphics.sprites.grid.Grid;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
@@ -23,7 +20,7 @@ import java.util.Random;
  * PlayState. The state that handles the actual
  */
 public class PlayState extends State {
-    private ArrayList<PhysObject> planets;
+    private ArrayList<BasicShape> planets;
     private Random rand;
     private Player2 player;
     private ShapeRenderer sr;
@@ -41,7 +38,7 @@ public class PlayState extends State {
         //map = new Map("space-background.png", 512, 512);
         rand = new Random();
         sr = new ShapeRenderer();
-        planets = new ArrayList<PhysObject>();
+        planets = new ArrayList<>();
         planets.add(new Circle(0,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         planets.add(new Circle(1100,0,100,new Vector3(0,22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
         planets.add(new Circle(1300,0,100,new Vector3(0,-24,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
@@ -100,8 +97,8 @@ public class PlayState extends State {
         sr.setProjectionMatrix(cam.combined);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        for (PhysObject shape : planets) {
-            shape.render(sr);
+        for (BasicShape shape : planets) {
+            shape.draw(sr);
         }
         sr.end();
     }
