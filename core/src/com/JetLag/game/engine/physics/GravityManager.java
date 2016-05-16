@@ -12,6 +12,7 @@ import java.util.List;
 public class GravityManager {
     protected static GravityManager _instance = null;
     protected double threshold;
+    protected float last_delta;
 
     // This alters the total force between the two objects.
     protected float Gconst;
@@ -41,30 +42,6 @@ public class GravityManager {
     }
 
     /**
-     *
-     * @param obj
-     * @param delta
-     */
-    public void update(PhysObject obj, float delta) {
-
-        for (PhysObject pObj : passives) {
-            Vector3 fdir = new Vector3(pObj.getPosition());
-            fdir.sub(obj.getPosition());
-
-            float length = fdir.len();
-
-            fdir.nor();
-            fdir.scl( (float) ( (Gconst * obj.getMass() * pObj.getMass()) / ( Math.pow((double)length,1.8)) ));
-            fdir.scl(delta);
-
-            obj.getVelocity().add(fdir);
-            //obj.setVelocity( obj.getVelocity().scl(0.4f).cpy());
-
-            obj.getPosition().add((obj.getVelocity()).cpy());
-        }
-    }
-
-    /**
      * Returns absolute value of the force between the two objects.
      *
      * @param obj1
@@ -75,20 +52,28 @@ public class GravityManager {
         float dist = obj2.getPosition().cpy().sub(obj1.getPosition()).len();
 
         return Math.abs((Gconst * obj1.getMass() * obj2.getMass()) / ((float) Math.pow(dist, 1.8)));
-
     }
 
     /**
      *
      */
     public void simulate(PhysObject active, PhysObject passive) {
-        float force = getForce(active, passive);
-
         Vector3 fdir = passive.getPosition().cpy().sub(active.getPosition());
-        fdir.nor();
-        fdir.scl(fdir);
+
+        fdir.scl(last_delta);
 
         active.getVelocity().add(fdir);
-        active.setPosition(active.getVelocity());
+        active.addPosition(active.getVelocity().cpy().scl(last_delta));
+    }
+
+    public void setDelta(float dt) {
+        this.last_delta = dt;
+    }
+
+    public void setOrbitalSpeed(PhysObject active, PhysObject passive) {
+        Vector3 fdir  = active.getPosition().cpy().sub(passive.getPosition());
+        fdir.crs(0, 0, -1);
+
+        active.setVelocity(fdir);
     }
 }
