@@ -1,6 +1,5 @@
 package com.JetLag.game.engine.physics;
 
-import com.JetLag.game.engine.PhysObject;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.LinkedList;
@@ -17,28 +16,12 @@ public class GravityManager {
     // This alters the total force between the two objects.
     protected float Gconst;
 
-    // This alters the speed of the simulation
-    protected float base_timescale;
-
-    protected List<PhysObject> passives;
-    protected List<PhysObject> actives;
-
-    enum OBJECT_TYPE_HINT {
-        UNKNOWN,
-        ACTIVE,
-        PASSIVE
-    }
-
     /**
      * Initializes an instance of a gravity manager.
      */
     private GravityManager() {
-        passives = new LinkedList<PhysObject>();
-        actives = new LinkedList<PhysObject>();
-
         threshold = 10;
         Gconst = 1f;
-        base_timescale = 15;
     }
 
     /**
@@ -51,56 +34,6 @@ public class GravityManager {
         if (_instance == null) _instance = new GravityManager();
 
         return _instance;
-    }
-
-    /**
-     * Registers the given object as a passive object.
-     *
-     * @param obj object to register.
-     */
-    public void registerPassive(PhysObject obj) {
-        if (!contains(obj, OBJECT_TYPE_HINT.PASSIVE)) passives.add(obj);
-    }
-
-    /**
-     * Registers the given object as an active object.
-     *
-     * @param obj object to register.
-     */
-    public void registerActive(PhysObject obj) {
-        if (!contains(obj, OBJECT_TYPE_HINT.ACTIVE)) actives.add(obj);
-
-    }
-
-    /**
-     * Checks whether the given object is registered.
-     *
-     * @param obj object to search for.
-     */
-    public void contains(PhysObject obj) {
-        contains(obj, OBJECT_TYPE_HINT.UNKNOWN);
-    }
-
-    /**
-     * Checks whether the given object is registered.
-     *
-     * @param obj object to search for.
-     * @param hint object type hint.
-     * @return whether the object has been registered.
-     *
-     * @throws IllegalArgumentException if the object hint type is unknown.
-     */
-    public boolean contains(PhysObject obj, OBJECT_TYPE_HINT hint) throws IllegalArgumentException {
-        switch (hint) {
-            case PASSIVE:
-                return passives.contains(obj) ? true : actives.contains(obj);
-
-            case ACTIVE:
-            case UNKNOWN:
-                return actives.contains(obj) ? true : passives.contains(obj);
-        }
-
-        throw new IllegalArgumentException("Invalid hint type!");
     }
 
     public void setThreshold(double threshold) {
@@ -132,12 +65,30 @@ public class GravityManager {
     }
 
     /**
+     * Returns absolute value of the force between the two objects.
      *
-     * @param delta
+     * @param obj1
+     * @param obj2
+     * @return absolute value of the force between two objects.
      */
-    public void update(float delta) {
-        for (PhysObject obj : actives) {
-            update(obj, delta);
-        }
+    protected float getForce(PhysObject obj1, PhysObject obj2) {
+        float dist = obj2.getPosition().cpy().sub(obj1.getPosition()).len();
+
+        return Math.abs((Gconst * obj1.getMass() * obj2.getMass()) / ((float) Math.pow(dist, 1.8)));
+
+    }
+
+    /**
+     *
+     */
+    public void simulate(PhysObject active, PhysObject passive) {
+        float force = getForce(active, passive);
+
+        Vector3 fdir = passive.getPosition().cpy().sub(active.getPosition());
+        fdir.nor();
+        fdir.scl(fdir);
+
+        active.getVelocity().add(fdir);
+        active.setPosition(active.getVelocity());
     }
 }

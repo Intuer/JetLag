@@ -1,5 +1,6 @@
-package com.JetLag.game.engine;
+package com.JetLag.game.engine.physics;
 
+import com.JetLag.game.engine.BasicObject;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 

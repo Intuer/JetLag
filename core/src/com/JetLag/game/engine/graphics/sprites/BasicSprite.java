@@ -1,6 +1,6 @@
 package com.JetLag.game.engine.graphics.sprites;
 
-import com.JetLag.game.engine.PhysObject;
+import com.JetLag.game.engine.physics.PhysObject;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;

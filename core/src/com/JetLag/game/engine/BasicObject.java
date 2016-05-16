@@ -49,6 +49,13 @@ public abstract class BasicObject {
     public void addPosition(float x, float y, float z) { pos.add(x, y, z); }
 
     /**
+     * Moves this object along the specified vector.
+     *
+     * @param vec vector to move the object along.
+     */
+    public void addPosition(Vector3 vec) { this.pos.add(vec); }
+
+    /**
      * Sets the position of this object.
      *
      * @param x position along the x-axis.
