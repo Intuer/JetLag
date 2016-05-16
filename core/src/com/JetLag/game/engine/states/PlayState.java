@@ -19,7 +19,7 @@ import java.util.Random;
 public class PlayState extends State {
     private ArrayList<BasicShape> planets;
     private Random rand;
-    private Player2 player;
+    private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
@@ -36,7 +36,7 @@ public class PlayState extends State {
         planets.add(new Circle(0,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         planets.add(new Circle(1100,0,100,new Vector3(0,22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
         planets.add(new Circle(1300,0,100,new Vector3(0,-24,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
-        player = new Player2(1000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
+        player = new Player(1000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
         planets.add(player);
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
@@ -74,8 +74,6 @@ public class PlayState extends State {
     protected void update(float dt) {
         handleInput();
         gm.update(dt);
-        //cam.translate(player.getVelocity().x, -player.getVelocity().y);
-        //map.moveBackground((int) player.getVelocity().x / 500, (int) player.getVelocity().y / 500);
         cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
         cam.position.y = player.getPosition().y + 3*player.getVelocity().y;
         cam.update();
