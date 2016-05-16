@@ -1,8 +1,6 @@
 package com.JetLag.game.engine.graphics.sprites;
 
-import com.JetLag.game.engine.PhysObject;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -26,7 +24,7 @@ public class Player2 extends BasicShape {
 
     public void draw(ShapeRenderer sr) {
         //A black border
-        sr.setColor(0,0,0,1);
+        sr.setColor(1,0,0,1);
         sr.rect(pos.x-40, pos.y-40, 80,80);
 
         //The actual circle base

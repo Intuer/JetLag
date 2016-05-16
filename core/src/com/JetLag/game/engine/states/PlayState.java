@@ -1,16 +1,13 @@
 package com.JetLag.game.engine.states;
 
 import com.JetLag.game.JetLag;
-import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.Map;
 import com.JetLag.game.engine.graphics.sprites.*;
-import com.JetLag.game.engine.graphics.sprites.grid.Grid;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
@@ -26,16 +23,13 @@ public class PlayState extends State {
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
-    private Grid grid;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false,JetLag.WIDTH / 0.2f, JetLag.HEIGHT / 0.2f);
         Gdx.gl.glClearColor(1,1,1,1);
 
-        grid = new Grid(cam);
-
-        //map = new Map("space-background.png", 512, 512);
+        map = new Map(cam);
         rand = new Random();
         sr = new ShapeRenderer();
         planets = new ArrayList<>();
@@ -85,15 +79,15 @@ public class PlayState extends State {
         cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
         cam.position.y = player.getPosition().y + 3*player.getVelocity().y;
         cam.update();
-        grid.update();
+
+        map.update();
     }
 
     @Override
     protected void render(SpriteBatch sb) {
         Gdx.gl.glClearColor(1,1,1,1);
-        grid.render(sr);
 
-        //map.drawBackground(sb);
+        map.draw(sr);
         sr.setProjectionMatrix(cam.combined);
 
         sr.begin(ShapeRenderer.ShapeType.Filled);

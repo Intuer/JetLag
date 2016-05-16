@@ -1,10 +1,11 @@
 package com.JetLag.game.engine.graphics;
 
-import com.JetLag.game.JetLag;
-import com.JetLag.game.engine.BasicObject;
-import com.JetLag.game.engine.graphics.sprites.Background;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.JetLag.game.engine.graphics.sprites.BasicShape;
+import com.JetLag.game.engine.graphics.sprites.grid.Grid;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,49 +15,33 @@ import java.util.Set;
  * @version 05.13.2016
  */
 public class Map {
-    protected Background background;
+    protected Grid grid;
 
     // Objects that won't be removed (ie. planets).
-    protected Set<BasicObject> static_objects;
+    protected Set<BasicShape> static_objects;
 
-    /**
-     * Creates a map with a specified background and region size.
-     * The region size specifies the part of the background image
-     * should be rendered.
-     *
-     * @param bgName background name.
-     * @param rwidth region width.
-     * @param rheight region height.
-     */
-    public Map(String bgName, int rwidth, int rheight) {
-        background = new Background(bgName, rwidth, rheight);
+    public Map(OrthographicCamera cam) {
+        grid = new Grid(cam);
+        static_objects = new HashSet<>();
     }
 
     /**
-     * Creates a map with the standard background and standard region size.
+     * Moves the grid according to the players movement.
      */
-    public Map() {
-        this("space-background.png", 512, 512);
-    }
-
-    /**
-     * Moves the background region by a specified amount (in pixels).
-     *
-     * @param x amount along the x-axis.
-     * @param y amount along the y-axis.
-     */
-    public void moveBackground(int x, int y) {
-        background.moveRegion(x, y);
+    public void update() {
+        grid.update();
     }
 
     /**
      * Draw the background.
      *
-     * @param sb spritebatch renderer to use.
+     * @param sr shapeRenderer used when drawing the map.
      */
-    public void drawBackground(SpriteBatch sb) {
-        sb.begin();
-        sb.draw(background.getRegion(), 0, 0, JetLag.WIDTH, JetLag.HEIGHT);
-        sb.end();
+    public void draw(ShapeRenderer sr) {
+        grid.draw(sr);
+
+        for (BasicShape shape : static_objects) {
+            shape.draw(sr);
+        }
     }
 }

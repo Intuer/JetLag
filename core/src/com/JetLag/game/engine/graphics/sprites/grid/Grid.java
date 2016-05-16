@@ -68,7 +68,7 @@ public class Grid {
         }
     }
 
-    public void render(ShapeRenderer sr){
+    public void draw(ShapeRenderer sr){
         for ( GridLine l : gridH ){
             l.render(sr);
         }
