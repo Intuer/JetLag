@@ -33,6 +33,7 @@ public class PlayState extends State {
     private Map map;
     private Grid grid;
     private Texture pause;
+    private Texture tm;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -40,7 +41,7 @@ public class PlayState extends State {
         Gdx.gl.glClearColor(1,1,1,1);
         pause = new Texture("pausebutton.png");
         grid = new Grid(cam);
-
+        tm = new Texture("tm.png");
         //map = new Map("space-background.png", 512, 512);
         rand = new Random();
         sr = new ShapeRenderer();
@@ -76,9 +77,7 @@ public class PlayState extends State {
     @Override
     protected void handleInput() {
         if ( Gdx.input.getX() < 70 ){
-
-                gsm.push(new PauseState(gsm));
-
+            gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ){
             gsm.push(new PauseState(gsm));
@@ -123,6 +122,7 @@ public class PlayState extends State {
 
         sb.begin();
         sb.draw(pause,20,JetLag.HEIGHT-pause.getHeight()-20);
+        sb.draw(tm,JetLag.WIDTH-70,20);
         sb.end();
 
     }
