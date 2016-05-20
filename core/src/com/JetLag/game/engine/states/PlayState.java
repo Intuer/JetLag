@@ -124,7 +124,6 @@ public class PlayState extends State {
         sb.draw(pause,20,JetLag.HEIGHT-pause.getHeight()-20);
         sb.draw(tm,JetLag.WIDTH-70,20);
         sb.end();
-
     }
 
     @Override
