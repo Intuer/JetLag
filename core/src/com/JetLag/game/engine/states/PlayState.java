@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class PlayState extends State {
     private ArrayList<BasicSprite> planets;
-    private Player2 player;
+    private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
@@ -41,14 +41,14 @@ public class PlayState extends State {
         planets.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
         planets.add(new Planet(1100, 0, 100, 100, new Vector3(0,22,0)));
         planets.add(new Planet(1300, 0, 50, 100, new Vector3(0,-24,0)));
-        player = new Player2(JetLag.WIDTH/2, JetLag.HEIGHT/2, 100,new Vector3(0,0,0),new float[]{87,0,131,1});
+        player = new Player(JetLag.WIDTH/2, JetLag.HEIGHT/2, 100,new Vector3(0,0,0),new float[]{87,0,131,1});
         //planets.add(player);
 
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
         gm.registerActive(planets.get(2));
-        gm.registerActive(player);
+        //gm.registerActive(player);
 
 
         player.setBounds(-10000, -10000, 20000, 20000);
@@ -77,7 +77,8 @@ public class PlayState extends State {
     @Override
     protected void update(float dt) {
         handleInput();
-//         gm.update(dt);
+        gm.update(dt);
+        player.update();
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
         map.moveBackground((int) player.getVelocity().x / 5, (int) -player.getVelocity().y / 5);
 

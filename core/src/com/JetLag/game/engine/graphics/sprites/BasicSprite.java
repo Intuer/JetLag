@@ -13,7 +13,10 @@ public abstract class BasicSprite extends PhysObject{
 
     public BasicSprite(int x, int y, float mass, Vector3 vel, String textureName) {
         super(x, y, mass, vel);
-        this.texture = new Texture(textureName);
+
+        if (textureName != null) {
+            this.texture = new Texture(textureName);
+        }
     }
 
     public abstract void draw(SpriteBatch sb);
