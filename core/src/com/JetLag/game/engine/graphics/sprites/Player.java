@@ -1,7 +1,8 @@
 package com.JetLag.game.engine.graphics.sprites;
 
-import com.JetLag.game.engine.PhysObject;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -9,24 +10,24 @@ import com.badlogic.gdx.math.Vector3;
  * Created by jacob_000 on 2016-05-14.
  */
 
-public class Player extends BasicShape {
+public class Player extends BasicSprite {
 
     protected float rotate = 0;
     private float length = 100;
     private Rectangle bounds;
+    private TextureRegion region;
+    private float scale = 0.5f;
 
-    public Player(int x, int y, float mass, Vector3 vel, float[] colour) {
-        super(x, y, mass, vel, colour);
+    public Player(int x, int y, float mass, Vector3 vel) {
+        super(x, y, mass, vel, "ship.png");
+        region = new TextureRegion(texture);
         this.bounds = null;
     }
 
-    public void render(ShapeRenderer sr) {
-        //A black border
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(colour[0],colour[1],colour[2],1);
-        sr.identity();
-        sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
-        sr.end();
+    public void draw(SpriteBatch sb) {
+        sb.begin();
+        sb.draw(region, pos.x - texture.getWidth()/2, pos.y - texture.getHeight()/2, texture.getWidth()/2, texture.getHeight()/2, (float) texture.getWidth(), (float) texture.getHeight(), scale, scale, rotate + 180, false);
+        sb.end();
     }
 
     public void setRotate(float rot){

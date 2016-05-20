@@ -37,9 +37,9 @@ public class PlayState extends State {
 
         planets = new ArrayList<>();
         planets.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
-        planets.add(new Planet(1100, 0, 100, 100, new Vector3(0,22,0)));
-        planets.add(new Planet(1300, 0, 50, 100, new Vector3(0,-24,0)));
-        player = new Player(JetLag.WIDTH/2, JetLag.HEIGHT/2, 100,new Vector3(0,0,0),new float[]{87,0,131,1});
+        planets.add(new Planet(1100, 0, 700, 100, new Vector3(0,22,0)));
+        planets.add(new Planet(1300, 0, 800, 100, new Vector3(0,-24,0)));
+        player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100,new Vector3(0,0,0));
         //planets.add(player);
 
         gm = GravityManager.getInstance();
@@ -65,10 +65,10 @@ public class PlayState extends State {
             player.setVelocity(player.getVelocity().add((float)Math.cos(player.getRotateRad()),(float)Math.sin(player.getRotateRad()),0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) {
-            player.setRotate(player.getRotate() - 1);
+            player.setRotate(player.getRotate() - 3);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            player.setRotate(player.getRotate() +1 );
+            player.setRotate(player.getRotate() + 3);
         }
     }
 
@@ -89,6 +89,7 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(staticcam.combined);
         map.drawBackground(sb, player);
+        player.draw(sb);
 
         sb.setProjectionMatrix(cam.combined);
 
@@ -98,7 +99,6 @@ public class PlayState extends State {
         }
         sb.end();
 
-        player.render(sr);
     }
 
     @Override
