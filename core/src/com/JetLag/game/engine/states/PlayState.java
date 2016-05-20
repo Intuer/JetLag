@@ -25,6 +25,7 @@ public class PlayState extends State {
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
+    private float speed = 0.5f; 
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -67,13 +68,13 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            player.setVelocity(player.getVelocity().add((float)Math.cos(player.getRotationRad()),(float)Math.sin(player.getRotationRad()),0));
+            player.setVelocity( player.getVelocity().add(new Vector3((float)Math.cos(player.getRotationRad()),(float)Math.sin(player.getRotationRad()),0).scl(speed)));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ){
-            player.setRotation(player.getRotation() - 1);
+            player.setRotation(player.getRotation() - 2);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            player.setRotation(player.getRotation() + 1);
+            player.setRotation(player.getRotation() + 2);
         }
         player.addPosition(player.getVelocity());
     }
