@@ -15,6 +15,7 @@ public class Player2 extends BasicShape {
     protected int borderwidth = 10;
     protected int shadewidth = 2;
     protected float rotate = 0;
+    private float length = 100;
 
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
@@ -30,8 +31,7 @@ public class Player2 extends BasicShape {
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(0,0,0,1);
         sr.identity();
-        sr.rotate(0,0,1,rotate);
-        sr.rect(pos.x-40, pos.y-40, 80,80);
+        sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
         sr.end();
     }
 
@@ -40,7 +40,11 @@ public class Player2 extends BasicShape {
     }
 
     public float getRotate(){
-        return rotate; 
+        return rotate;
+    }
+
+    public float getRotateRad(){
+        return getRotate()*(float)(Math.PI/180);
     }
 
     public void setVelocity(Vector3 vel){
