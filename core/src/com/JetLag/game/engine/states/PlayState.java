@@ -11,10 +11,12 @@ import com.JetLag.game.engine.graphics.sprites.grid.Grid;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,12 +32,13 @@ public class PlayState extends State {
     private GravityManager gm;
     private Map map;
     private Grid grid;
+    private Texture pause;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false,JetLag.WIDTH / 0.2f, JetLag.HEIGHT / 0.2f);
         Gdx.gl.glClearColor(1,1,1,1);
-
+        pause = new Texture("pausebutton.png");
         grid = new Grid(cam);
 
         //map = new Map("space-background.png", 512, 512);
@@ -72,6 +75,11 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
+        if ( Gdx.input.getX() < 70 ){
+
+                gsm.push(new PauseState(gsm));
+
+        }
         if ( Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ){
             gsm.push(new PauseState(gsm));
         }
@@ -112,6 +120,11 @@ public class PlayState extends State {
         for (PhysObject shape : planets) {
             shape.render(sr);
         }
+
+        sb.begin();
+        sb.draw(pause,20,JetLag.HEIGHT-pause.getHeight()-20);
+        sb.end();
+
     }
 
     @Override
