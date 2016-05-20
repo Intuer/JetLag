@@ -3,7 +3,6 @@ package com.JetLag.game.engine.graphics.sprites;
 import com.JetLag.game.engine.PhysObject;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -24,7 +23,7 @@ public class Player2 extends BasicShape {
     public void render(ShapeRenderer sr) {
         //A black border
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(0,0,0,1);
+        sr.setColor(colour[0],colour[1],colour[2],1);
         sr.identity();
         sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
         sr.end();

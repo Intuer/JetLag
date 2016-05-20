@@ -2,6 +2,7 @@ package com.JetLag.game.engine.graphics;
 
 import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.BasicObject;
+import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.sprites.Background;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -18,6 +19,8 @@ public class Map {
 
     // Objects that won't be removed (ie. planets).
     protected Set<BasicObject> static_objects;
+    protected float zoom;
+    private final float DEFAULT_ZOOM = 5.0f;
 
     /**
      * Creates a map with a specified background and region size.
@@ -30,6 +33,7 @@ public class Map {
      */
     public Map(String bgName, int rwidth, int rheight) {
         background = new Background(bgName, rwidth, rheight);
+        zoom = DEFAULT_ZOOM;
     }
 
     /**
@@ -54,9 +58,17 @@ public class Map {
      *
      * @param sb spritebatch renderer to use.
      */
-    public void drawBackground(SpriteBatch sb) {
+    public void drawBackground(SpriteBatch sb, PhysObject player) {
         sb.begin();
-        sb.draw(background.getRegion(), 0, 0, JetLag.WIDTH, JetLag.HEIGHT);
+        sb.draw(background.getRegion(), 0, 0, JetLag.WIDTH * zoom, JetLag.HEIGHT * zoom);
         sb.end();
+    }
+
+    public float getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(float zoom) {
+        this.zoom  = zoom;
     }
 }

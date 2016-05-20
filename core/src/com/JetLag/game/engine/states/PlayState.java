@@ -1,16 +1,12 @@
 package com.JetLag.game.engine.states;
 
 import com.JetLag.game.JetLag;
-import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.Map;
-import com.JetLag.game.engine.graphics.sprites.BasicShape;
-import com.JetLag.game.engine.graphics.sprites.Circle;
-import com.JetLag.game.engine.graphics.sprites.Player;
-import com.JetLag.game.engine.graphics.sprites.Player2;
-import com.JetLag.game.engine.graphics.sprites.grid.Grid;
+import com.JetLag.game.engine.graphics.sprites.*;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
@@ -23,35 +19,36 @@ import java.util.Random;
  * PlayState. The state that handles the actual
  */
 public class PlayState extends State {
-    private ArrayList<PhysObject> planets;
-    private Random rand;
+    private ArrayList<BasicSprite> planets;
     private Player2 player;
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
-    private Grid grid;
+    private OrthographicCamera staticcam;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
-        cam.setToOrtho(false,JetLag.WIDTH / 0.2f, JetLag.HEIGHT / 0.2f);
         Gdx.gl.glClearColor(1,1,1,1);
+        staticcam = new OrthographicCamera();
 
-        grid = new Grid(cam);
-
-        //map = new Map("space-background.png", 512, 512);
-        rand = new Random();
+        map = new Map("space-background.png", 512, 512);
         sr = new ShapeRenderer();
-        planets = new ArrayList<PhysObject>();
-        planets.add(new Circle(0,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
-        planets.add(new Circle(1100,0,100,new Vector3(0,22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
-        planets.add(new Circle(1300,0,100,new Vector3(0,-24,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
-        player = new Player2(1000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
-        planets.add(player);
+
+        cam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
+        staticcam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
+
+        planets = new ArrayList<>();
+        planets.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
+        planets.add(new Planet(1100, 0, 100, 100, new Vector3(0,22,0)));
+        planets.add(new Planet(1300, 0, 50, 100, new Vector3(0,-24,0)));
+        player = new Player2(JetLag.WIDTH/2, JetLag.HEIGHT/2, 100,new Vector3(0,0,0),new float[]{87,0,131,1});
+        //planets.add(player);
+
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
         gm.registerActive(planets.get(2));
-        gm.registerActive(planets.get(3));
+        gm.registerActive(player);
 
 
         player.setBounds(-10000, -10000, 20000, 20000);
@@ -80,29 +77,29 @@ public class PlayState extends State {
     @Override
     protected void update(float dt) {
         handleInput();
-        gm.update(dt);
+//         gm.update(dt);
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
-        //map.moveBackground((int) player.getVelocity().x / 500, (int) player.getVelocity().y / 500);
+        map.moveBackground((int) player.getVelocity().x / 5, (int) -player.getVelocity().y / 5);
 
-        cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
-        cam.position.y = player.getPosition().y + 3*player.getVelocity().y;
         player.moveToBounds();
+        cam.translate(player.getVelocity().x, player.getVelocity().y);
         cam.update();
-        grid.update();
     }
 
     @Override
     protected void render(SpriteBatch sb) {
-        Gdx.gl.glClearColor(1,1,1,1);
-        grid.render(sr);
+        sb.setProjectionMatrix(staticcam.combined);
+        map.drawBackground(sb, player);
 
-        //map.drawBackground(sb);
-        sr.setProjectionMatrix(cam.combined);
+        sb.setProjectionMatrix(cam.combined);
 
-
-        for (PhysObject shape : planets) {
-            shape.render(sr);
+        sb.begin();
+        for (BasicSprite shape : planets) {
+            shape.draw(sb);
         }
+        sb.end();
+
+        player.render(sr);
     }
 
     @Override
