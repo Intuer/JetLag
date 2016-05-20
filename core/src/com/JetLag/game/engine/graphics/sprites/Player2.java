@@ -1,26 +1,39 @@
 package com.JetLag.game.engine.graphics.sprites;
 
-import com.JetLag.game.engine.PhysObject;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by jacob_000 on 2016-05-14.
+ * Basic player class.
+ *
+ * @author Nicklas Hersen, Jacob Sorme
+ * @version 05.20.2016
  */
-
 public class Player2 extends BasicShape {
-
     protected float rotate = 0;
     private float length = 100;
     private Rectangle bounds;
 
+    /**
+     * Creates a player.
+     *
+     * @param x position along the x-axis.
+     * @param y position along the y-axis.
+     * @param mass mass of the player.
+     * @param vel initial velocity.
+     * @param colour player colour.
+     */
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
         this.bounds = null;
     }
 
+    /**
+     * Renders the player.
+     *
+     * @param sr shapeRenderer to render the player with.
+     */
     public void render(ShapeRenderer sr) {
         //A black border
         sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -30,14 +43,30 @@ public class Player2 extends BasicShape {
         sr.end();
     }
 
+    /**
+     * Set player rotation. The rotation should
+     * be specified in degrees.
+     *
+     * @param rot new rotation (in degrees).
+     */
     public void setRotate(float rot){
         this.rotate = rot;
     }
 
+    /**
+     * Returns the rotation of the player.
+     *
+     * @return the rotation of the player.
+     */
     public float getRotate(){
         return rotate;
     }
 
+    /**
+     * Returns the rotation in radians.
+     *
+     * @return  rotation in radians.
+     */
     public float getRotateRad(){
         return getRotate()*(float)(Math.PI/180);
     }
