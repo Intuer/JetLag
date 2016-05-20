@@ -42,14 +42,10 @@ public class Player2 extends BasicShape {
         return getRotate()*(float)(Math.PI/180);
     }
 
-    public void setVelocity(Vector3 vel){
-        this.vel = vel;
-    }
-
-    public Vector3 getVelocity(){
-        return vel;
-    }
-
+    /**
+     * Moves the player into the bounding box.
+     * If no bounding box is specified nothing is done.
+     */
     public void moveToBounds() {
         if (bounds == null) return;
 
