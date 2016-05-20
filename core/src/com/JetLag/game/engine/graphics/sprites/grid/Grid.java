@@ -17,8 +17,8 @@ public class Grid {
 
     OrthographicCamera cam;
     float margin = 3; //How many lines outside of view
-    float spacing = 150;
-    float thick = 15;
+    float spacing = 200;
+    float thick = 25;
     float x;
     float y;
 

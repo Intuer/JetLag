@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 /**
  * PlayState. The state that handles the actual
  */
@@ -50,6 +51,7 @@ public class PlayState extends State {
         s.addObject(c, System.TYPE.ACTIVE);
 
         gm.setOrbitalSpeed(planets.get(2), planets.get(0));
+        planets.get(2).addVel(new Vector3(0,3000,0));
         gm.setOrbitalSpeed(planets.get(1), planets.get(0));
         gm.setOrbitalSpeed(c, planets.get(0));
         map.addSystem(s);
@@ -65,22 +67,20 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            player.setVelocity(player.getVelocity().add(0,1,0));
-        }
-        if ( Gdx.input.isKeyPressed(Input.Keys.DOWN) ){
-            player.setVelocity(player.getVelocity().add(0,-1,0));
+            player.setVelocity(player.getVelocity().add((float)Math.cos(player.getRotationRad()),(float)Math.sin(player.getRotationRad()),0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ){
-            player.setVelocity(player.getVelocity().add(1,0,0));
+            player.setRotation(player.getRotation() - 1);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            player.setVelocity(player.getVelocity().add(-1,0,0));
+            player.setRotation(player.getRotation() + 1);
         }
         player.addPosition(player.getVelocity());
     }
 
     @Override
     protected void update(float dt) {
+
         handleInput();
         gm.setDelta(dt);
         cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
@@ -96,12 +96,10 @@ public class PlayState extends State {
 
         map.drawGrid(sr);
 
-        sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setProjectionMatrix(cam.combined);
         map.draw(sr);
         planets.get(3).draw(sr);
 
-        sr.end();
     }
 
     @Override
