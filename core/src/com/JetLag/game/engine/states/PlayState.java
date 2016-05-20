@@ -42,19 +42,28 @@ public class PlayState extends State {
         rand = new Random();
         sr = new ShapeRenderer();
         planets = new ArrayList<PhysObject>();
-        planets.add(new Circle(0,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
-        planets.add(new Circle(1100,0,100,new Vector3(0,22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
-        planets.add(new Circle(1300,0,100,new Vector3(0,-24,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
-        player = new Player2(1000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
+        planets.add(new Circle(-3000,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
+        planets.add(new Circle(8000,8000,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
+
+        planets.add(new Circle(-2200,0,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
+        planets.add(new Circle(-2000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
+        planets.add(new Circle(-4000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},200));
+        player = new Player2(-2000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
+
+        planets.add(new Circle(8800,8000,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
+
         planets.add(player);
         gm = GravityManager.getInstance();
         gm.registerPassive(planets.get(0));
-        gm.registerActive(planets.get(1));
+        gm.registerPassive(planets.get(1));
         gm.registerActive(planets.get(2));
         gm.registerActive(planets.get(3));
+        gm.registerActive(planets.get(4));
+        gm.registerActive(planets.get(5));
+        gm.registerActive(planets.get(6));
 
 
-        player.setBounds(-10000, -10000, 20000, 20000);
+        player.setBounds(-20000, -20000, 40000, 40000);
 
         //TODO
         //gm.registerActive(player);
@@ -67,13 +76,13 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            player.setVelocity(player.getVelocity().add(new Vector3((float)Math.cos(player.getRotateRad()),(float)Math.sin(player.getRotateRad()),0).scl(0.5f)));
+            player.setVelocity(player.getVelocity().add(new Vector3((float) Math.cos(player.getRotateRad()), (float) Math.sin(player.getRotateRad()), 0).scl(0.3f)));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) {
-            player.setRotate(player.getRotate() - 1);
+            player.setRotate(player.getRotate() - 2);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            player.setRotate(player.getRotate() +1 );
+            player.setRotate(player.getRotate() +2 );
         }
     }
 

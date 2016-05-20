@@ -120,14 +120,18 @@ public class GravityManager {
 
             float length = fdir.len();
 
-            fdir.nor();
-            fdir.scl( (float) ( (Gconst * obj.getMass() * pObj.getMass()) / ( Math.pow((double)length,1.8)) ));
-            fdir.scl(delta);
+            if (length > 200) {
 
-            obj.getVelocity().add(fdir);
-            //obj.setVelocity( obj.getVelocity().scl(0.4f).cpy());
+                fdir.nor();
+                fdir.scl((float) ((Gconst * obj.getMass() * pObj.getMass()) / (Math.pow((double) length, 1.8))));
+                fdir.scl(delta);
 
-            obj.getPosition().add((obj.getVelocity()).cpy());
+                obj.getVelocity().add(fdir);
+                //obj.setVelocity( obj.getVelocity().scl(0.4f).cpy());
+
+                obj.getPosition().add((obj.getVelocity()).cpy());
+
+            }
         }
     }
 
