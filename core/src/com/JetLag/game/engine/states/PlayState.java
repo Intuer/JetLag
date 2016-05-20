@@ -54,6 +54,7 @@ public class PlayState extends State {
         gm.registerActive(planets.get(3));
 
 
+        player.setBounds(-10000, -10000, 20000, 20000);
 
         //TODO
         //gm.registerActive(player);
@@ -82,8 +83,10 @@ public class PlayState extends State {
         gm.update(dt);
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
         //map.moveBackground((int) player.getVelocity().x / 500, (int) player.getVelocity().y / 500);
+
         cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
         cam.position.y = player.getPosition().y + 3*player.getVelocity().y;
+        player.moveToBounds();
         cam.update();
         grid.update();
     }
