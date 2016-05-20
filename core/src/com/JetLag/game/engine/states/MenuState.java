@@ -11,12 +11,12 @@ import com.JetLag.game.JetLag;
 public class MenuState extends State {
 
     private Texture background;
-    private Texture button;
+    //private Texture button;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("background.png");
-        button = new Texture("button.png");
+        //button = new Texture("button.png");
     }
 
     @Override
@@ -36,13 +36,13 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background,0,0, JetLag.WIDTH, JetLag.HEIGHT);
-        sb.draw(button, JetLag.WIDTH / 2 - (50), JetLag.HEIGHT/2,100,50);
+        //sb.draw(button, JetLag.WIDTH / 2 - (50), JetLag.HEIGHT/2,100,50);
         sb.end();
     }
 
     @Override
     public void dispose() {
         background.dispose();
-        button.dispose();
+        //button.dispose();
     }
 }
