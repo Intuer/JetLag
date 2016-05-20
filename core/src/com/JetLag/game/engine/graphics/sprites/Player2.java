@@ -54,9 +54,9 @@ public class Player2 extends BasicShape {
         if (bounds == null) return;
 
         if (pos.x < bounds.x) {
-            pos.x = bounds.x + length;
+            pos.x = bounds.x;
             setVelocity(0, vel.y, vel.z);
-        } else if (pos.x > bounds.x + bounds.width) {
+        } else if (pos.x > bounds.x + bounds.width - length) {
             pos.x = bounds.x + bounds.width - length;
             setVelocity(0, vel.y, vel.z);
         }
