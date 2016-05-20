@@ -14,6 +14,7 @@ public class Player2 extends BasicShape {
     protected int radius;
     protected int borderwidth = 10;
     protected int shadewidth = 2;
+    protected float rotate = 0;
 
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
@@ -27,14 +28,19 @@ public class Player2 extends BasicShape {
     public void render(ShapeRenderer sr) {
         //A black border
         sr.begin(ShapeRenderer.ShapeType.Filled);
-
         sr.setColor(0,0,0,1);
+        sr.identity();
+        sr.rotate(0,0,1,rotate);
         sr.rect(pos.x-40, pos.y-40, 80,80);
-
-        //The actual circle base
-
-
         sr.end();
+    }
+
+    public void setRotate(float rot){
+        this.rotate = rot;
+    }
+
+    public float getRotate(){
+        return rotate; 
     }
 
     public void setVelocity(Vector3 vel){
