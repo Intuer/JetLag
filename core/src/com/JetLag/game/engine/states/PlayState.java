@@ -4,6 +4,7 @@ import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.graphics.Map;
 import com.JetLag.game.engine.graphics.sprites.*;
 import com.JetLag.game.engine.physics.GravityManager;
+import com.JetLag.game.engine.utils.MapUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,13 +12,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.ArrayList;
-
 /**
  * PlayState. The state that handles the actual
  */
 public class PlayState extends State {
-    private ArrayList<BasicSprite> planets;
     private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
@@ -31,11 +29,15 @@ public class PlayState extends State {
         gm = GravityManager.getInstance();
 
         map = new Map();
+        MapUtils maputils = new MapUtils(map, 1000, 1000);
+        maputils.setRandomRadiusAmount(2);
+        maputils.spawnRandomPlanets(10);
         sr = new ShapeRenderer();
 
         cam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
         staticcam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
 
+        /*
         int id = map.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
         gm.registerPassive(map.get(id));
         //map.add(new Planet(1100, 0, 700, 100, new Vector3(0,22,0)));
@@ -45,13 +47,8 @@ public class PlayState extends State {
             gm.registerActive(map.get(id));
         }
 
+        */
         player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100, new Vector3(0,0,0));
-        //planets.add(player);
-
-        //gm.registerPassive(planets.get(0));
-        //gm.registerActive(planets.get(1));
-        //gm.registerActive(planets.get(2));
-        //gm.registerActive(player);
 
         player.setBounds(-10000, -10000, 20000, 20000);
 

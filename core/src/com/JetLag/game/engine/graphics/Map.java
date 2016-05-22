@@ -25,8 +25,8 @@ public class Map {
     protected Integer obj_id = 0;
 
     private final float DEFAULT_ZOOM = 5.0f;
-    private static final int DEFAULT_WIDTH = 2048;
-    private static final int DEFAULT_HEIGHT = 2048;
+    private static final int DEFAULT_WIDTH = 20048;
+    private static final int DEFAULT_HEIGHT = 20048;
 
     /**
      * Creates a map with a specified background and region size.
