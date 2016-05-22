@@ -42,7 +42,7 @@ public class Map {
     public Map(String bgName, int width, int height, int rwidth, int rheight) {
         background = new Background(bgName, rwidth, rheight);
         static_objects = new HashMap<>();
-        bounds = new Rectangle(-width/2, -height/2, width/2, height/2);
+        bounds = new Rectangle(-width/2, -height/2, width, height);
         zoom = DEFAULT_ZOOM;
     }
 
