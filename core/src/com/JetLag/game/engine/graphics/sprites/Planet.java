@@ -23,12 +23,9 @@ public class Planet extends BasicSprite {
         }
 
         String name = base_name + numbers[r.nextInt(numbers.length)] + ".png";
-        texture = new Texture(name);
+        setTexture(name);
 
         this.radius = radius;
-    }
-
-    public void draw(SpriteBatch sp) {
-        sp.draw(texture, pos.x - radius, pos.y - radius, 2*radius, 2*radius);
+        setScale((radius*2) / getWidth());
     }
 }

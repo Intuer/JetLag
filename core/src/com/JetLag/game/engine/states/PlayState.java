@@ -61,13 +61,13 @@ public class PlayState extends State {
             gsm.push(new PauseState(gsm));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
-            player.setVelocity(player.getVelocity().add((float)Math.cos(player.getRotateRad()),(float)Math.sin(player.getRotateRad()),0));
+            player.setVelocity(player.getVelocity().add((float)Math.cos(player.getAngleInRad()),(float)Math.sin(player.getAngleInRad()),0));
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) {
-            player.setRotate(player.getRotate() - 3);
+            player.setAngle(player.getAngle() - 3);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            player.setRotate(player.getRotate() + 3);
+            player.setAngle(player.getAngle() + 3);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             System.out.println("D is pressed.");
@@ -95,9 +95,10 @@ public class PlayState extends State {
 
         sb.setProjectionMatrix(cam.combined);
 
-        player.draw(sb);
 
         sb.begin();
+        player.draw(sb);
+
         for (BasicSprite shape : planets) {
             shape.draw(sb);
         }

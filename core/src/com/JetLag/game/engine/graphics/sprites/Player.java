@@ -13,11 +13,8 @@ import com.badlogic.gdx.math.Vector3;
  */
 
 public class Player extends BasicSprite {
-    protected float rotate = 0;
     private float length = 100;
     private Rectangle bounds;
-    private TextureRegion region;
-    private float scale = 0.5f;
 
     /**
      * Creates a basic player.
@@ -29,47 +26,8 @@ public class Player extends BasicSprite {
      */
     public Player(int x, int y, float mass, Vector3 vel) {
         super(x, y, mass, vel, "ship.png");
-        region = new TextureRegion(texture);
         this.bounds = null;
-    }
-
-    /**
-     * Draws the player.
-     *
-     * @param sb spritebatch to use.
-     */
-    public void draw(SpriteBatch sb) {
-        sb.begin();
-        sb.draw(region, pos.x - texture.getWidth()/2, pos.y - texture.getHeight()/2, texture.getWidth()/2, texture.getHeight()/2, (float) texture.getWidth(), (float) texture.getHeight(), scale, scale, rotate + 180, false);
-        sb.end();
-    }
-
-    /**
-     * Sets the current rotation of the object, as in the
-     * direction the object is facing.
-     *
-     * @param rot new angle.
-     */
-    public void setRotate(float rot){
-        this.rotate = rot;
-    }
-
-    /**
-     * Returns the current rotation in degrees.
-     *
-     * @return the current rotation in degrees.
-     */
-    public float getRotate(){
-        return rotate;
-    }
-
-    /**
-     * Returns the current rotation in radians.
-     *
-     * @return rotation in radians.
-     */
-    public float getRotateRad(){
-        return getRotate()*(float)(Math.PI/180);
+        setScale(0.5f);
     }
 
     /**
