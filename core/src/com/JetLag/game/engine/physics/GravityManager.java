@@ -47,7 +47,7 @@ public class GravityManager {
         actives = new LinkedList<PhysObject>();
 
         threshold = 10;
-        Gconst = 1f;
+        Gconst = 3f;
         base_timescale = 15;
     }
 
@@ -125,21 +125,34 @@ public class GravityManager {
     public void update(PhysObject obj, float delta) {
 
         for (PhysObject pObj : passives) {
-            if (pObj == obj) continue;;
+            if (pObj == obj) continue;
 
             Vector3 fdir = new Vector3(pObj.getPosition());
             fdir.sub(obj.getPosition());
 
-            float length = fdir.len();
-
             fdir.nor();
-            fdir.scl( (float) ( (Gconst * obj.getMass() * pObj.getMass()) / ( Math.pow((double)length,1.8)) ));
+            fdir.scl(getAttractionForce(obj, pObj));
             fdir.scl(delta);
 
             obj.addVel(fdir);
 
             obj.addPosition(obj.getVelocity());
         }
+    }
+
+    /**
+     * Returns the attraction force between two objects.
+     *
+     * @param obj1 object 1.
+     * @param obj2 object 2.
+     * @return the attraction force between the two objects.
+     */
+    private float getAttractionForce(PhysObject obj1, PhysObject obj2) {
+        Vector3 dir = obj1.getPosition().cpy().sub(obj2.getPosition());
+        float force = Gconst / (dir.len2());
+        force *= obj1.getMass()  * obj2.getMass();
+
+        return force;
     }
 
     /**

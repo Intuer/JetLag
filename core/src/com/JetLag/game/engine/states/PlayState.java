@@ -28,27 +28,30 @@ public class PlayState extends State {
         super(gsm);
         Gdx.gl.glClearColor(1,1,1,1);
         staticcam = new OrthographicCamera();
+        gm = GravityManager.getInstance();
 
-        map = new Map("space-background.png", 512, 512);
+        map = new Map();
         sr = new ShapeRenderer();
 
         cam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
         staticcam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
 
-        planets = new ArrayList<>();
-        planets.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
-        planets.add(new Planet(1100, 0, 700, 100, new Vector3(0,22,0)));
-        planets.add(new Planet(1300, 0, 800, 100, new Vector3(0,-24,0)));
-        planets.add(new Asteroid(2000, 0, 100, new Vector3(0,0,0)));
+        int id = map.add(new Planet(0, 0, 500, 100000, new Vector3(0,0,0)));
+        gm.registerPassive(map.get(id));
+        //map.add(new Planet(1100, 0, 700, 100, new Vector3(0,22,0)));
+
+        for (int i = 0; i < 3; i++) {
+            id = map.add(new Planet(1000*(i + 1), 0, 800, 100, new Vector3(0, -24 + 6*(i), 0)));
+            gm.registerActive(map.get(id));
+        }
+
         player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100, new Vector3(0,0,0));
         //planets.add(player);
 
-        gm = GravityManager.getInstance();
-        gm.registerPassive(planets.get(0));
-        gm.registerActive(planets.get(1));
-        gm.registerActive(planets.get(2));
-        gm.registerActive(player);
-
+        //gm.registerPassive(planets.get(0));
+        //gm.registerActive(planets.get(1));
+        //gm.registerActive(planets.get(2));
+        //gm.registerActive(player);
 
         player.setBounds(-10000, -10000, 20000, 20000);
 
@@ -100,9 +103,7 @@ public class PlayState extends State {
         sb.begin();
         player.draw(sb);
 
-        for (BasicSprite shape : planets) {
-            shape.draw(sb);
-        }
+        map.drawObjects(sb);
         sb.end();
 
     }
