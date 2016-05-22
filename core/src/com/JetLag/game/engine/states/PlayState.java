@@ -46,13 +46,12 @@ public class PlayState extends State {
         gm.registerPassive(planets.get(0));
         gm.registerActive(planets.get(1));
         gm.registerActive(planets.get(2));
-        //gm.registerActive(player);
+        gm.registerActive(player);
 
 
         player.setBounds(-10000, -10000, 20000, 20000);
 
         //TODO
-        //gm.registerActive(player);
 
     }
 
@@ -70,6 +69,9 @@ public class PlayState extends State {
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
             player.setRotate(player.getRotate() + 3);
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            System.out.println("D is pressed.");
+        }
     }
 
     @Override
@@ -80,8 +82,12 @@ public class PlayState extends State {
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
         map.moveBackground((int) player.getVelocity().x / 5, (int) -player.getVelocity().y / 5);
 
+        player.addPosition(player.getVelocity());
         player.moveToBounds();
-        cam.translate(player.getVelocity().x, player.getVelocity().y);
+
+        //cam.translate(player.getVelocity().x, player.getVelocity().y);
+        cam.position.x = player.getPosition().x;
+        cam.position.y = player.getPosition().y;
         cam.update();
     }
 
@@ -89,9 +95,10 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(staticcam.combined);
         map.drawBackground(sb, player);
-        player.draw(sb);
 
         sb.setProjectionMatrix(cam.combined);
+
+        player.draw(sb);
 
         sb.begin();
         for (BasicSprite shape : planets) {
