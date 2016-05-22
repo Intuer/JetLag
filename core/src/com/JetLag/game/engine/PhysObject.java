@@ -88,6 +88,4 @@ public abstract class PhysObject extends BasicObject {
     public void setMass(float mass) {
         this.mass = mass;
     }
-
-    public void render(ShapeRenderer sr){}
 }

@@ -82,9 +82,6 @@ public class PlayState extends State {
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
         map.moveBackground((int) player.getVelocity().x / 5, (int) -player.getVelocity().y / 5);
 
-        player.addPosition(player.getVelocity());
-        player.moveToBounds();
-
         //cam.translate(player.getVelocity().x, player.getVelocity().y);
         cam.position.x = player.getPosition().x;
         cam.position.y = player.getPosition().y;
