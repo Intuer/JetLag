@@ -28,4 +28,8 @@ public class Planet extends BasicSprite {
         this.radius = radius;
         setScale((radius*2) / getWidth());
     }
+
+    public Planet(int x, int y, float radius, float mass)  {
+        this(x, y, radius, mass, new Vector3(0, 0, 0));
+    }
 }
