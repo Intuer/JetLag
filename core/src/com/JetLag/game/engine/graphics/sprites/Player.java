@@ -89,12 +89,4 @@ public class Player extends BasicSprite {
     public void setBounds(int x1, int y1, int width, int height) {
         this.bounds = new Rectangle(x1, y1, width, height);
     }
-
-    public float getWidth() {
-        return texture.getWidth();
-    }
-
-    public float getHeight() {
-        return texture.getHeight();
-    }
 }
