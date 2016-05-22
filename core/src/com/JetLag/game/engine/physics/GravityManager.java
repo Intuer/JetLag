@@ -7,6 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Handles the gravity in the solar system.
+ *
+ * There are two types of physics objects, active and passive.
+ * A passive object attracts active objects, while active objects
+ * gets attracted to passive objects. An object can be both passive
+ * and active at the same time.
+ *
  * @author Nicklas Hersen
  * @version 05.09.2016
  */
@@ -23,6 +30,9 @@ public class GravityManager {
     protected List<PhysObject> passives;
     protected List<PhysObject> actives;
 
+    /**
+     * Object groups.
+     */
     enum OBJECT_TYPE_HINT {
         UNKNOWN,
         ACTIVE,
@@ -59,7 +69,7 @@ public class GravityManager {
      * @param obj object to register.
      */
     public void registerPassive(PhysObject obj) {
-        if (!contains(obj, OBJECT_TYPE_HINT.PASSIVE)) passives.add(obj);
+        passives.add(obj);
     }
 
     /**
@@ -68,8 +78,7 @@ public class GravityManager {
      * @param obj object to register.
      */
     public void registerActive(PhysObject obj) {
-        if (!contains(obj, OBJECT_TYPE_HINT.ACTIVE)) actives.add(obj);
-
+        actives.add(obj);
     }
 
     /**
@@ -108,13 +117,16 @@ public class GravityManager {
     }
 
     /**
+     * Simulates gravity for the specified object.
      *
-     * @param obj
-     * @param delta
+     * @param obj object to simulate.
+     * @param delta time delta.
      */
     public void update(PhysObject obj, float delta) {
 
         for (PhysObject pObj : passives) {
+            if (pObj == obj) continue;;
+
             Vector3 fdir = new Vector3(pObj.getPosition());
             fdir.sub(obj.getPosition());
 
@@ -131,8 +143,9 @@ public class GravityManager {
     }
 
     /**
+     * Simulates gravity for all the specified active objects.
      *
-     * @param delta
+     * @param delta time delta.
      */
     public void update(float delta) {
         for (PhysObject obj : actives) {

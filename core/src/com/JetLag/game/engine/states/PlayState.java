@@ -40,7 +40,7 @@ public class PlayState extends State {
         planets.add(new Planet(1100, 0, 700, 100, new Vector3(0,22,0)));
         planets.add(new Planet(1300, 0, 800, 100, new Vector3(0,-24,0)));
         planets.add(new Asteroid(2000, 0, 100, new Vector3(0,0,0)));
-        player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100,new Vector3(0,0,0));
+        player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100, new Vector3(0,0,0));
         //planets.add(player);
 
         gm = GravityManager.getInstance();
