@@ -31,6 +31,7 @@ public class Player extends BasicSprite {
     /**
      * Updates the players position and velocity.
      */
+    @Override
     public void update() {
         if (getVelocityLen()> 20) {
             getVelocity().nor().scl(20);

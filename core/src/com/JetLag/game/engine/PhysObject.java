@@ -88,4 +88,11 @@ public abstract class PhysObject extends BasicObject {
     public void setMass(float mass) {
         this.mass = mass;
     }
+
+    /**
+     * Updates the objects position based on its velocity.
+     */
+    public void update() {
+        addPosition(vel);
+    }
 }
