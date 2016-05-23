@@ -3,6 +3,7 @@ package com.JetLag.game.engine.states;
 import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.graphics.Map;
 import com.JetLag.game.engine.graphics.sprites.*;
+import com.JetLag.game.engine.physics.CollisionManager;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.JetLag.game.engine.utils.MapUtils;
 import com.badlogic.gdx.Gdx;
@@ -21,6 +22,7 @@ public class PlayState extends State {
     private GravityManager gm;
     private Map map;
     private OrthographicCamera staticcam;
+    private Asteroid a;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -29,9 +31,9 @@ public class PlayState extends State {
         gm = GravityManager.getInstance();
 
         map = new Map();
-        MapUtils maputils = new MapUtils(map, 1000, 1000);
-        maputils.setRandomRadiusAmount(2);
-        maputils.spawnRandomPlanets(10);
+        MapUtils maputils = new MapUtils(map, 300, 100000);
+        maputils.setRandomRadiusAmount(1.3f);
+        maputils.spawnRandomPlanets(5);
         sr = new ShapeRenderer();
 
         cam.setToOrtho(false, JetLag.WIDTH * map.getZoom(), JetLag.HEIGHT * map.getZoom());
@@ -49,8 +51,10 @@ public class PlayState extends State {
 
         */
         player = new Player((int) (map.getZoom()*JetLag.WIDTH)/2, (int) (map.getZoom()*JetLag.HEIGHT)/2, 100, new Vector3(0,0,0));
+        gm.registerActive(player);
 
-        player.setBounds(-10000, -10000, 20000, 20000);
+        a = new Asteroid(500, 0, 500, new Vector3(0, 0, 0));
+        map.add(a);
 
         //TODO
 
@@ -70,23 +74,24 @@ public class PlayState extends State {
         if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
             player.setAngle(player.getAngle() + 3);
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            System.out.println("D is pressed.");
-        }
     }
 
     @Override
     protected void update(float dt) {
         handleInput();
         gm.update(dt);
-        player.update();
         //cam.translate(player.getVelocity().x, -player.getVelocity().y);
         map.moveBackground((int) player.getVelocity().x / 5, (int) -player.getVelocity().y / 5);
+        map.updatePlayer(player);
+        player.update();
 
         //cam.translate(player.getVelocity().x, player.getVelocity().y);
         cam.position.x = player.getPosition().x;
         cam.position.y = player.getPosition().y;
         cam.update();
+
+        CollisionManager.getInstance().collides(player, a);
+
     }
 
     @Override

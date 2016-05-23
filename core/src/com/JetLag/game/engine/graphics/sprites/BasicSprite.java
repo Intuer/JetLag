@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -145,5 +146,14 @@ public abstract class BasicSprite extends PhysObject{
     public void setTexture(String name) {
         texture = new Texture(name);
         sprite = new Sprite(texture);
+    }
+
+    /**
+     * Returns the hit box of the sprite.
+     *
+     * @return the hit box of the sprite.
+     */
+    public Rectangle getHitBox() {
+        return sprite.getBoundingRectangle();
     }
 }

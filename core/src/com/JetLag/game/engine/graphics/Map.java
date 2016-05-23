@@ -4,8 +4,11 @@ import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.sprites.Background;
 import com.JetLag.game.engine.graphics.sprites.BasicSprite;
+import com.JetLag.game.engine.graphics.sprites.Player;
+import com.JetLag.game.engine.physics.CollisionManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
 
@@ -136,5 +139,34 @@ public class Map {
      */
     public final Rectangle getMapRegion() {
         return bounds;
+    }
+
+
+
+    public void updatePlayer(Player player) {
+        CollisionManager collider = CollisionManager.getInstance();
+        Vector3 pos = player.getPosition();
+        Vector3 vel = player.getVelocity();
+        float length =  player.getWidth();
+
+        for (BasicSprite s : static_objects.values()) {
+            collider.collides(player, s);
+        }
+
+        if (pos.x < bounds.x) {
+            pos.x = bounds.x;
+            player.setVelocity(0, vel.y, vel.z);
+        } else if (pos.x > bounds.x + bounds.width - length) {
+            pos.x = bounds.x + bounds.width - length;
+            player.setVelocity(0, vel.y, vel.z);
+        }
+
+        if (pos.y < bounds.y) {
+            pos.y = bounds.y;
+            player.setVelocity(vel.x, 0, vel.z);
+        } else if (pos.y > bounds.y + bounds.height - length) {
+            pos.y = bounds.y + bounds.height - length;
+            player.setVelocity(vel.x, 0, vel.z);
+        }
     }
 }
