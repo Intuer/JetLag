@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Basic game map.
@@ -26,10 +28,11 @@ public class Map {
     protected float zoom;
     protected Rectangle bounds;
     protected Integer obj_id = 0;
+    protected List<Integer> unused_ids;
 
     private final float DEFAULT_ZOOM = 5.0f;
-    private static final int DEFAULT_WIDTH = 20048;
-    private static final int DEFAULT_HEIGHT = 20048;
+    private static final int DEFAULT_WIDTH = 20000;
+    private static final int DEFAULT_HEIGHT = 20000;
 
     /**
      * Creates a map with a specified background and region size.
@@ -45,6 +48,7 @@ public class Map {
     public Map(String bgName, int width, int height, int rwidth, int rheight) {
         background = new Background(bgName, rwidth, rheight);
         static_objects = new HashMap<>();
+        unused_ids = new LinkedList<>();
         bounds = new Rectangle(-width/2, -height/2, width, height);
         zoom = DEFAULT_ZOOM;
     }
@@ -73,8 +77,17 @@ public class Map {
      * @return an ID associated with the object.
      */
     public Integer add(BasicSprite sprite) {
-        static_objects.put(obj_id, sprite);
-        return obj_id++;
+        Integer id;
+
+        if (unused_ids.size() > 0) {
+            id = unused_ids.get(0);
+            unused_ids.remove(0);
+        } else {
+            id = obj_id++;
+        }
+
+        static_objects.put(id, sprite);
+        return id;
     }
 
     /**
@@ -101,6 +114,7 @@ public class Map {
     public void remove(Integer objID) {
         if (static_objects.containsKey(objID)) {
             static_objects.remove(objID);
+            unused_ids.add(objID);
         }
     }
 
