@@ -1,5 +1,7 @@
 package com.JetLag.game.engine.graphics.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -48,12 +50,15 @@ public class Player2 extends BasicShape {
 //        sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
 //        sr.end();
 
+        Gdx.gl.glEnable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
+        Gdx.gl.glLineWidth(2);
         sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setColor(0,0,0,1);
         shape.setRotation(rotate);
         shape.setPosition(pos.x, pos.y);
         sr.polygon(shape.getTransformedVertices());
         sr.end();
+        Gdx.gl.glDisable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
 
 
     }

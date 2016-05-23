@@ -25,7 +25,9 @@ public class JetLag extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
-		music = Gdx.audio.newMusic(new FileHandle("music.mp3"));
+		music = Gdx.audio.newMusic(new FileHandle("music2.mp3"));
+		music.setVolume(0.5f);
+		music.setLooping(true);
 		music.play();
 		gsm.push(new MenuState(gsm));
 	}
