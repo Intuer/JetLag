@@ -92,6 +92,19 @@ public class Map {
     }
 
     /**
+     * Removes the object associated with the specified id.
+     * If there is no object associated with the specified id
+     * nothing is done.
+     *
+     * @param objID association id.
+     */
+    public void remove(Integer objID) {
+        if (static_objects.containsKey(objID)) {
+            static_objects.remove(objID);
+        }
+    }
+
+    /**
      * Draw the background.
      *
      * @param sb spritebatch renderer to use.
