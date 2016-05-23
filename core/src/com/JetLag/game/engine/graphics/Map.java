@@ -3,6 +3,7 @@ package com.JetLag.game.engine.graphics;
 import com.JetLag.game.engine.graphics.sprites.BasicShape;
 import com.JetLag.game.engine.graphics.sprites.grid.Grid;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.awt.Rectangle;
 import java.util.HashMap;
@@ -16,12 +17,12 @@ import java.util.List;
  * @version 05.13.2016
  */
 public class Map {
-    protected Grid grid;
-    protected Rectangle bounds;
+    private Grid grid;
+    private Rectangle bounds;
 
-    protected HashMap<Integer, BasicShape> objects;
-    private Integer object_id;
+    private HashMap<Integer, BasicShape> objects;
     private List<Integer> unused_ids;
+    private Integer object_id;
 
     /**
      * Creates a map with a specified background and region size.
@@ -36,7 +37,7 @@ public class Map {
         unused_ids = new LinkedList<>();
 
         this.bounds = bounds;
-        object_id = -1;
+        object_id = 0;
     }
 
     /**
@@ -90,6 +91,19 @@ public class Map {
 
         unused_ids.add(id);
         objects.remove(id);
+    }
+
+    /**
+     * Renders all objects contained in this map.
+     *
+     * @param sr shape renderer to use.
+     */
+    public void render(ShapeRenderer sr) {
+        grid.render(sr);
+
+        for (BasicShape shape : objects.values()) {
+            shape.render(sr);
+        }
     }
 }
 
