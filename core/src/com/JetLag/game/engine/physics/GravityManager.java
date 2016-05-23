@@ -130,7 +130,7 @@ public class GravityManager {
 
             obj.addVel(fdir);
 
-            obj.addPosition(obj.getVelocity());
+            obj.update();
         }
     }
 
