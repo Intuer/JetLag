@@ -24,6 +24,7 @@ public class CollisionManager {
         Vector3 vec = obj1.getPosition().cpy().sub(obj2.getPosition());
 
         if (Intersector.overlaps(obj1.getHitBox(), obj2.getHitBox())) {
+            vec.nor().scl(obj1.getVelocity().len());
             obj1.setVelocity(vec);
         }
 
