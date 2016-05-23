@@ -1,5 +1,6 @@
 package com.JetLag.game;
 
+import com.JetLag.game.engine.states.PauseState;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -37,5 +38,10 @@ public class JetLag extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);
+		if (gsm.peek() instanceof PauseState){
+			music.pause();
+		} else if (!music.isPlaying()) {
+			music.play();
+		}
 	}
 }
