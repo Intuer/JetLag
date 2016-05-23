@@ -1,11 +1,13 @@
 package com.JetLag.game.engine.graphics;
 
-import com.JetLag.game.JetLag;
-import com.JetLag.game.engine.BasicObject;
-import com.JetLag.game.engine.graphics.sprites.Background;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.JetLag.game.engine.graphics.sprites.BasicShape;
+import com.JetLag.game.engine.graphics.sprites.grid.Grid;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
-import java.util.Set;
+import java.awt.Rectangle;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Basic game map.
@@ -14,49 +16,80 @@ import java.util.Set;
  * @version 05.13.2016
  */
 public class Map {
-    protected Background background;
+    protected Grid grid;
+    protected Rectangle bounds;
 
-    // Objects that won't be removed (ie. planets).
-    protected Set<BasicObject> static_objects;
+    protected HashMap<Integer, BasicShape> objects;
+    private Integer object_id;
+    private List<Integer> unused_ids;
 
     /**
      * Creates a map with a specified background and region size.
      * The region size specifies the part of the background image
      * should be rendered.
      *
-     * @param bgName background name.
-     * @param rwidth region width.
-     * @param rheight region height.
+     * @param cam projection camera.
      */
-    public Map(String bgName, int rwidth, int rheight) {
-        background = new Background(bgName, rwidth, rheight);
+    public Map(OrthographicCamera cam, Rectangle bounds){
+        grid = new Grid(cam);
+        objects = new HashMap<>();
+        unused_ids = new LinkedList<>();
+
+        this.bounds = bounds;
+        object_id = -1;
     }
 
     /**
-     * Creates a map with the standard background and standard region size.
-     */
-    public Map() {
-        this("space-background.png", 512, 512);
-    }
-
-    /**
-     * Moves the background region by a specified amount (in pixels).
+     * Updates various components stored in the map.
      *
-     * @param x amount along the x-axis.
-     * @param y amount along the y-axis.
+     * @param dt time since last update.
      */
-    public void moveBackground(int x, int y) {
-        background.moveRegion(x, y);
+    public void update(float dt) {
+        grid.update();
     }
 
     /**
-     * Draw the background.
+     * Adds an object to the map.
      *
-     * @param sb spritebatch renderer to use.
+     * @param shape object to add.
+     * @return an integer associated with the object.
      */
-    public void drawBackground(SpriteBatch sb) {
-        sb.begin();
-        sb.draw(background.getRegion(), 0, 0, JetLag.WIDTH, JetLag.HEIGHT);
-        sb.end();
+    public Integer add(BasicShape shape) {
+        Integer id;
+
+        if (unused_ids.size() > 0) {
+            id = unused_ids.get(0);
+            unused_ids.remove(0);
+        } else {
+            id = object_id++;
+        }
+
+        objects.put(id, shape);
+
+        return object_id;
+    }
+
+    /**
+     * Returns the object associated with the specified id.
+     * @param id object id.
+     * @return the object associated with the id.
+     */
+    public BasicShape get(Integer id) {
+        return objects.get(id);
+    }
+
+    /**
+     * Removes an object from the map.
+     *
+     * @param id of the associated object.
+     */
+    public void remove(Integer id) {
+        if (!objects.containsKey(id)) {
+            throw new RuntimeException("There is no object associated with the specified key!");
+        }
+
+        unused_ids.add(id);
+        objects.remove(id);
     }
 }
+
