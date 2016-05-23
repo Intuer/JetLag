@@ -2,6 +2,7 @@ package com.JetLag.game.engine.graphics.sprites;
 
 import com.JetLag.game.engine.PhysObject;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
@@ -14,12 +15,10 @@ import com.badlogic.gdx.math.Vector3;
  */
 public abstract class BasicSprite extends PhysObject{
     private Texture texture;
-    private TextureRegion tex_region;
-    protected float angle;
-    protected float scale;
+    private Sprite sprite;
 
     /**
-     * Creates a basic renderable sprite with the specifed
+     * Creates a basic renderable sprite with the specified
      * properties.
      *
      * @param x position along the x-axis.
@@ -34,8 +33,6 @@ public abstract class BasicSprite extends PhysObject{
         if (textureName != null) {
             setTexture(textureName);
         }
-
-        scale = 1.0f;
     }
 
     /**
@@ -47,8 +44,11 @@ public abstract class BasicSprite extends PhysObject{
      */
 
     public void draw(SpriteBatch sb) {
-        if (tex_region != null) {
-            sb.draw(tex_region, pos.x - texture.getWidth() / 2, pos.y - texture.getHeight() / 2, texture.getWidth() / 2, texture.getHeight() / 2, (float) texture.getWidth(), (float) texture.getHeight(), scale, scale, angle + 180, false);
+        sprite.setPosition(pos.x, pos.y);
+
+        if (sprite != null) {
+            sprite.draw(sb);
+            //sb.draw(tex_region, pos.x - texture.getWidth() / 2, pos.y - texture.getHeight() / 2, texture.getWidth() / 2, texture.getHeight() / 2, (float) texture.getWidth(), (float) texture.getHeight(), scale, scale, angle + 180, false);
         } else {
             throw new RuntimeException("No texture specified!");
         }
@@ -60,7 +60,7 @@ public abstract class BasicSprite extends PhysObject{
      * @return the width of the sprite.
      */
     public float getWidth() {
-        return texture.getWidth();
+        return sprite.getWidth();
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class BasicSprite extends PhysObject{
      * @return the height of the sprite.
      */
     public float getHeight() {
-        return texture.getHeight();
+        return sprite.getHeight();
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class BasicSprite extends PhysObject{
      * @param angle new angle.
      */
     public void setAngle(float angle){
-        this.angle = angle;
+        sprite.setRotation(angle);
     }
 
     /**
@@ -88,7 +88,7 @@ public abstract class BasicSprite extends PhysObject{
      * @return the current rotation in degrees.
      */
     public float getAngle(){
-        return angle;
+        return sprite.getRotation();
     }
 
     /**
@@ -103,19 +103,38 @@ public abstract class BasicSprite extends PhysObject{
     /**
      * Sets the scale of this sprite.
      *
-     * @param scale new scale.
+     * @param scaleX new scale along the x-axis.
+     * @param scaleY new scale along the y-axis.
      */
-    public void setScale(float scale) {
-        this.scale = scale;
+    public void setScale(float scaleX, float scaleY) {
+        sprite.setScale(scaleX, scaleY);
     }
 
     /**
-     * Returns the scale of this sprite.
+     * Sets the scale of this sprite along both the x, and y-axis
      *
-     * @return the scale of this sprite.
+     * @param scale new scale.
      */
-    public float getScale() {
-        return scale;
+    public void setScale(float scale) {
+        sprite.setScale(scale, scale);
+    }
+
+    /**
+     * Returns the scale of this sprite along the x-axis.
+     *
+     * @return the scale of this sprite along the x-axis.
+     */
+    public float getScaleX() {
+        return sprite.getScaleX();
+    }
+
+    /**
+     * Returns the scale of this sprite along the y-axis.
+     *
+     * @return the scale of this sprite along the y-axis.
+     */
+    public float getScaleY() {
+        return sprite.getScaleY();
     }
 
     /**
@@ -125,6 +144,6 @@ public abstract class BasicSprite extends PhysObject{
      */
     public void setTexture(String name) {
         texture = new Texture(name);
-        tex_region = new TextureRegion(texture);
+        sprite = new Sprite(texture);
     }
 }

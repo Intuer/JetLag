@@ -8,7 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
 /**
- * Created by Nicklas Hersén on 2016-05-22.
+ * Basic map utilities such as level generation.
+ *
+ * @author Nicklas Hersen
+ * @version 05.22.2016
  */
 public class MapUtils {
     private Map map;
@@ -20,6 +23,13 @@ public class MapUtils {
 
     private final float RANDOM_AMOUNT = 0.05f;
 
+    /**
+     * Initializes a MapUtils instance with the specified properties.
+     *
+     * @param map map to work on.
+     * @param brad base radius.
+     * @param bmass base mass.
+     */
     public MapUtils(Map map, int brad, int bmass) {
         this.map = map;
         rand = new Random();
