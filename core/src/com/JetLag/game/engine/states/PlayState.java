@@ -33,7 +33,7 @@ public class PlayState extends State {
 
         pause = new Texture("pausebutton.png");
         tm = new Texture("tm.png");
-        map = new Map(cam, null);
+        map = new Map(cam, 20000, 20000);
         rand = new Random();
         sr = new ShapeRenderer();
 
@@ -46,7 +46,9 @@ public class PlayState extends State {
 
         map.add(new Circle(8800,8000,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
 
-        map.add(player);
+        int id = map.add(player);
+        map.setBound(id);
+
         gm = GravityManager.getInstance();
         gm.registerPassive(map.get(0));
         gm.registerPassive(map.get(1));
@@ -55,8 +57,6 @@ public class PlayState extends State {
         gm.registerActive(map.get(4));
         gm.registerActive(map.get(5));
         gm.registerActive(map.get(6));
-
-        player.setBounds(-20000, -20000, 40000, 40000);
     }
 
     @Override
@@ -85,7 +85,6 @@ public class PlayState extends State {
 
         cam.position.x = player.getPosition().x + 3*player.getVelocity().x;
         cam.position.y = player.getPosition().y + 3*player.getVelocity().y;
-        player.moveToBounds();
         cam.update();
         map.update(dt);
     }
