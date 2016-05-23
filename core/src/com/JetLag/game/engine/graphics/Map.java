@@ -24,7 +24,7 @@ public class Map {
     protected Background background;
 
     // Objects that won't be removed (ie. planets).
-    protected HashMap<Integer, BasicSprite> static_objects;
+    protected HashMap<Integer, BasicSprite> objects;
     protected float zoom;
     protected Rectangle bounds;
     protected Integer obj_id = 0;
@@ -47,7 +47,7 @@ public class Map {
      */
     public Map(String bgName, int width, int height, int rwidth, int rheight) {
         background = new Background(bgName, rwidth, rheight);
-        static_objects = new HashMap<>();
+        objects = new HashMap<>();
         unused_ids = new LinkedList<>();
         bounds = new Rectangle(-width/2, -height/2, width, height);
         zoom = DEFAULT_ZOOM;
@@ -86,7 +86,7 @@ public class Map {
             id = obj_id++;
         }
 
-        static_objects.put(id, sprite);
+        objects.put(id, sprite);
         return id;
     }
 
@@ -99,9 +99,9 @@ public class Map {
      * @return object associated with the specified id.
      */
     public BasicSprite get(Integer objID) {
-        if (!static_objects.containsKey(objID)) return null;
+        if (!objects.containsKey(objID)) return null;
 
-        return static_objects.get(objID);
+        return objects.get(objID);
     }
 
     /**
@@ -112,8 +112,8 @@ public class Map {
      * @param objID association id.
      */
     public void remove(Integer objID) {
-        if (static_objects.containsKey(objID)) {
-            static_objects.remove(objID);
+        if (objects.containsKey(objID)) {
+            objects.remove(objID);
             unused_ids.add(objID);
         }
     }
@@ -136,7 +136,7 @@ public class Map {
      * @param sb spritebatch to use.
      */
     public void drawObjects(SpriteBatch sb) {
-        for (BasicSprite s : static_objects.values()) {
+        for (BasicSprite s : objects.values()) {
             s.draw(sb);
         }
     }
@@ -168,7 +168,14 @@ public class Map {
         return bounds;
     }
 
-
+    /**
+     * Calls the update method on all objects in the map.
+     */
+    public void update() {
+        for (BasicSprite sprite : objects.values()) {
+            sprite.update();
+        }
+    }
 
     public void updatePlayer(Player player) {
         CollisionManager collider = CollisionManager.getInstance();
@@ -176,7 +183,7 @@ public class Map {
         Vector3 vel = player.getVelocity();
         float length =  player.getWidth();
 
-        for (BasicSprite s : static_objects.values()) {
+        for (BasicSprite s : objects.values()) {
             collider.collides(player, s);
         }
 
