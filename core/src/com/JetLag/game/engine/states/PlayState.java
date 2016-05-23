@@ -84,6 +84,7 @@ public class PlayState extends State {
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
             player.setVelocity(player.getVelocity().add(new Vector3((float) Math.cos(player.getRotateRad()), (float) Math.sin(player.getRotateRad()), 0).scl(0.3f)));
+            player.setJet(true);
         }
         if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) {
             player.setRotate(player.getRotate() - 2);

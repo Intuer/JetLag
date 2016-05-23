@@ -20,6 +20,8 @@ public class Player2 extends BasicShape {
     private float length = 100;
     private Rectangle bounds;
     private Polygon shape;
+    private Polygon jet;
+    private boolean jetbeam = false;
 
     /**
      * Creates a player.
@@ -33,7 +35,9 @@ public class Player2 extends BasicShape {
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
         this.bounds = null;
-        this.shape = new Polygon(new float[]{-50,50,50,0,-50,-50,-50,50});
+        this.shape = new Polygon(new float[]{-50,50,80,0,-50,-50,-50,50});
+        this.jet = new Polygon(new float[]{-50,30,-50,-30,-80,0,-50,30});
+        jet.setPosition(pos.x,pos.y);
         shape.setPosition(pos.x,pos.y);
     }
 
@@ -53,14 +57,23 @@ public class Player2 extends BasicShape {
         Gdx.gl.glEnable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
         Gdx.gl.glLineWidth(2);
         sr.begin(ShapeRenderer.ShapeType.Line);
+
         sr.setColor(0,0,0,1);
         shape.setRotation(rotate);
         shape.setPosition(pos.x, pos.y);
         sr.polygon(shape.getTransformedVertices());
+
+        if(this.jetbeam) {
+            sr.setColor(1, 0, 0, 1);
+            jet.setRotation(rotate);
+            jet.setPosition(pos.x, pos.y);
+            sr.polygon(jet.getTransformedVertices());
+        }
+        
         sr.end();
         Gdx.gl.glDisable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
 
-
+        this.jetbeam = false;
     }
 
     /**
@@ -126,4 +139,9 @@ public class Player2 extends BasicShape {
     public void setBounds(int x1, int y1, int width, int height) {
         this.bounds = new Rectangle(x1, y1, width, height);
     }
+
+    public void setJet(boolean jet){
+        this.jetbeam = true;
+    }
+
 }
