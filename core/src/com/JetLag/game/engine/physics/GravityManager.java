@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class GravityManager {
     protected static GravityManager _instance = null;
-    protected double threshold;
 
     // This alters the total force between the two objects.
     protected float Gconst;
@@ -46,7 +45,6 @@ public class GravityManager {
         passives = new LinkedList<PhysObject>();
         actives = new LinkedList<PhysObject>();
 
-        threshold = 10;
         Gconst = 3f;
         base_timescale = 15;
     }
@@ -110,10 +108,6 @@ public class GravityManager {
         }
 
         throw new IllegalArgumentException("Invalid hint type!");
-    }
-
-    public void setThreshold(double threshold) {
-        this.threshold = threshold;
     }
 
     /**
