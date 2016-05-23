@@ -1,8 +1,11 @@
 package com.JetLag.game.engine.graphics.sprites;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+
+import java.awt.*;
 
 /**
  * Basic player class.
@@ -14,6 +17,7 @@ public class Player2 extends BasicShape {
     protected float rotate = 0;
     private float length = 100;
     private Rectangle bounds;
+    private Polygon shape;
 
     /**
      * Creates a player.
@@ -27,6 +31,8 @@ public class Player2 extends BasicShape {
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
         this.bounds = null;
+        this.shape = new Polygon(new float[]{-50,50,50,0,-50,-50,-50,50});
+        shape.setPosition(pos.x,pos.y);
     }
 
     /**
@@ -36,11 +42,20 @@ public class Player2 extends BasicShape {
      */
     public void render(ShapeRenderer sr) {
         //A black border
-        sr.begin(ShapeRenderer.ShapeType.Filled);
+//        sr.begin(ShapeRenderer.ShapeType.Filled);
+//        sr.setColor(0,0,0,1);
+//        sr.identity();
+//        sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
+//        sr.end();
+
+        sr.begin(ShapeRenderer.ShapeType.Line);
         sr.setColor(0,0,0,1);
-        sr.identity();
-        sr.rect(pos.x,pos.y,(length/2),(length/2),length,length,1,1,rotate);
+        shape.setRotation(rotate);
+        shape.setPosition(pos.x, pos.y);
+        sr.polygon(shape.getTransformedVertices());
         sr.end();
+
+
     }
 
     /**
