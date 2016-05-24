@@ -3,7 +3,7 @@ package com.JetLag.game.engine.states;
 import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.graphics.Map;
 import com.JetLag.game.engine.graphics.sprites.Circle;
-import com.JetLag.game.engine.graphics.sprites.Player2;
+import com.JetLag.game.engine.graphics.sprites.Player;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -19,7 +19,7 @@ import java.util.Random;
  */
 public class PlayState extends State {
     private Random rand;
-    private Player2 player;
+    private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
     private Map map;
@@ -42,7 +42,7 @@ public class PlayState extends State {
         map.add(new Circle(-2200,0,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
         map.add(new Circle(-2000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
         map.add(new Circle(-4000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},200));
-        player = new Player2(-2000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
+        player = new Player(-2000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
 
         map.add(new Circle(8800,8000,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
 
