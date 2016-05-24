@@ -89,5 +89,10 @@ public abstract class PhysObject extends BasicObject {
         this.mass = mass;
     }
 
-    public void render(ShapeRenderer sr){}
+    /**
+     * Adds the players current velocity onto its current position.
+     */
+    public void update() {
+        addPosition(getVelocity());
+    }
 }

@@ -67,4 +67,13 @@ public class Circle extends BasicShape {
     public final com.badlogic.gdx.math.Circle getHitbox() {
         return hitbox;
     }
+
+    /**
+     * Updates the objects position based on its velocity.
+     */
+    @Override
+    public void update() {
+        super.update();
+        hitbox.setPosition(pos.x, pos.y);
+    }
 }

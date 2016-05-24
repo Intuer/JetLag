@@ -4,6 +4,7 @@ import com.JetLag.game.JetLag;
 import com.JetLag.game.engine.graphics.Map;
 import com.JetLag.game.engine.graphics.sprites.Circle;
 import com.JetLag.game.engine.graphics.sprites.Player;
+import com.JetLag.game.engine.physics.CollisionManager;
 import com.JetLag.game.engine.physics.GravityManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,6 +23,7 @@ public class PlayState extends State {
     private Player player;
     private ShapeRenderer sr;
     private GravityManager gm;
+    private CollisionManager cm;
     private Map map;
     private Texture pause;
     private Texture tm;
@@ -36,20 +38,21 @@ public class PlayState extends State {
         map = new Map(cam, 30000, 30000);
         rand = new Random();
         sr = new ShapeRenderer();
+        cm = new CollisionManager();
+        gm = GravityManager.getInstance();
 
         map.add(new Circle(-3000,0,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         map.add(new Circle(8000,8000,100000,new Vector3(0,0,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},500));
         map.add(new Circle(-2200,0,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
         map.add(new Circle(-2000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},50));
         map.add(new Circle(-4000,0,100,new Vector3(0,-22,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},200));
-        player = new Player(-2000,0,100,new Vector3(0,20,0),new float[]{0,0,0,1});
+        player = new Player(-2000,0,0,new Vector3(0,20,0),new float[]{0,0,0,1});
 
         map.add(new Circle(8800,8000,100,new Vector3(0,20,0),new float[]{rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1},100));
 
         int id = map.add(player);
         map.setBound(id);
 
-        gm = GravityManager.getInstance();
         gm.registerPassive(map.get(0));
         gm.registerPassive(map.get(1));
         gm.registerActive(map.get(2));

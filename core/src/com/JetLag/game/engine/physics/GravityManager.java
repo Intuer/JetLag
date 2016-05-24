@@ -128,11 +128,6 @@ public class GravityManager {
 
                 //obj.addVel(fdir);
                 obj.getVelocity().add(fdir);
-                //obj.setVelocity( obj.getVelocity().scl(0.4f).cpy());
-
-                //obj.addPosition(obj.getVelocity());
-                obj.getPosition().add((obj.getVelocity()).cpy());
-
             }
         }
     }

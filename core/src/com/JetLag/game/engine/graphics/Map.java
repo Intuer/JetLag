@@ -1,7 +1,10 @@
 package com.JetLag.game.engine.graphics;
 
+import com.JetLag.game.engine.PhysObject;
 import com.JetLag.game.engine.graphics.sprites.BasicShape;
+import com.JetLag.game.engine.graphics.sprites.Player;
 import com.JetLag.game.engine.graphics.sprites.grid.Grid;
+import com.JetLag.game.engine.physics.CollisionManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -24,6 +27,7 @@ public class Map {
     private Set<BasicShape> bound_objects;
     private Integer object_id;
 
+    private CollisionManager cmanager;
     /**
      * Creates a map with a specified background and region size.
      * The region size specifies the part of the background image
@@ -41,6 +45,7 @@ public class Map {
 
         this.bounds = new Rectangle(-width/2, -height/2, width, height);
         object_id = 0;
+        cmanager = new CollisionManager();
     }
 
     /**
@@ -54,6 +59,26 @@ public class Map {
         if (bounds != null) {
             for (BasicShape shape : bound_objects) {
                 enforceBounds(shape);
+            }
+        }
+
+        for (int i = 1; i < objects.size(); i++) {
+            objects.get(i).update();
+
+            if (objects.get(i) instanceof Player) {
+                for (int j = 0; j < i; j++) {
+                    if (cmanager.collides(objects.get(i), objects.get(j))) {
+                        BasicShape obj1 = objects.get(i);
+                        BasicShape obj2 = objects.get(j);
+
+                        Vector3 dir = obj1.getPosition().cpy();
+                        dir.sub(obj2.getPosition());
+                        dir.nor();
+
+                        obj1.setVelocity(dir.cpy().scl(obj1.getVelocity().len()));
+                        obj2.setVelocity(dir.cpy().scl(obj2.getVelocity().len()).scl(-1));
+                    }
+                }
             }
         }
     }
