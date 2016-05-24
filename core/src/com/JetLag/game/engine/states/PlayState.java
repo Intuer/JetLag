@@ -33,7 +33,7 @@ public class PlayState extends State {
 
         pause = new Texture("pausebutton.png");
         tm = new Texture("tm.png");
-        map = new Map(cam, 20000, 20000);
+        map = new Map(cam, 30000, 30000);
         rand = new Random();
         sr = new ShapeRenderer();
 

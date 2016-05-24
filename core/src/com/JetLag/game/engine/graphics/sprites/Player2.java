@@ -17,7 +17,11 @@ import java.awt.*;
  */
 public class Player2 extends BasicShape {
     protected float rotate = 0;
+    private float length = 100;
+    private Rectangle bounds;
     private Polygon shape;
+    private Polygon jet;
+    private boolean jetbeam = false;
 
     /**
      * Creates a player.
@@ -30,9 +34,11 @@ public class Player2 extends BasicShape {
      */
     public Player2(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
-        this.shape = new Polygon(new float[]{-50,50,50,0,-50,-50,-50,50});
+        this.bounds = null;
+        this.shape = new Polygon(new float[]{-50,50,60,0,-50,-50,-50,50});
+        this.jet = new Polygon(new float[]{-50,30,-50,-30,-80,0,-50,30});
+        jet.setPosition(pos.x,pos.y);
         shape.setPosition(pos.x,pos.y);
-        size = (int) shape.getBoundingRectangle().width;
     }
 
     /**
@@ -51,12 +57,23 @@ public class Player2 extends BasicShape {
         Gdx.gl.glEnable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
         Gdx.gl.glLineWidth(2);
         sr.begin(ShapeRenderer.ShapeType.Line);
+
         sr.setColor(0,0,0,1);
         shape.setRotation(rotate);
         shape.setPosition(pos.x, pos.y);
         sr.polygon(shape.getTransformedVertices());
+
+        if(this.jetbeam) {
+            sr.setColor(1, 0, 0, 1);
+            jet.setRotation(rotate);
+            jet.setPosition(pos.x, pos.y);
+            sr.polygon(jet.getTransformedVertices());
+        }
+
         sr.end();
         Gdx.gl.glDisable(GL20.GL_ALIASED_LINE_WIDTH_RANGE);
+
+        this.jetbeam = false;
     }
 
     /**
@@ -86,4 +103,45 @@ public class Player2 extends BasicShape {
     public float getRotateRad(){
         return getRotate()*(float)(Math.PI/180);
     }
+
+    /**
+     * Moves the player into the bounding box.
+     * If no bounding box is specified nothing is done.
+     */
+    public void moveToBounds() {
+        if (bounds == null) return;
+
+        if (pos.x < bounds.x) {
+            pos.x = bounds.x;
+            setVelocity(0, vel.y, vel.z);
+        } else if (pos.x > bounds.x + bounds.width - length) {
+            pos.x = bounds.x + bounds.width - length;
+            setVelocity(0, vel.y, vel.z);
+        }
+
+        if (pos.y < bounds.y) {
+            pos.y = bounds.y;
+            setVelocity(vel.x, 0, vel.z);
+        } else if (pos.y > bounds.y + bounds.height - length) {
+            pos.y = bounds.y + bounds.height - length;
+            setVelocity(vel.x, 0, vel.z);
+        }
+    }
+
+    /**
+     * Sets the area the player is allowed to be in.
+     *
+     * @param x1 lower left corner x-coordinate.
+     * @param y1 lower left corner y-coordinate.
+     * @param width width of the bounding box.
+     * @param height height of the bounding box.
+     */
+    public void setBounds(int x1, int y1, int width, int height) {
+        this.bounds = new Rectangle(x1, y1, width, height);
+    }
+
+    public void setJet(boolean jet){
+        this.jetbeam = true;
+    }
+
 }
