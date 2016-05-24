@@ -3,9 +3,8 @@ package com.JetLag.game.engine.graphics.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 
 import java.awt.*;
 
@@ -17,8 +16,6 @@ import java.awt.*;
  */
 public class Player extends BasicShape {
     protected float rotate = 0;
-    private float length = 100;
-    private Rectangle bounds;
     private Polygon shape;
     private Polygon jet;
     private boolean jetbeam = false;
@@ -34,7 +31,6 @@ public class Player extends BasicShape {
      */
     public Player(int x, int y, float mass, Vector3 vel, float[] colour) {
         super(x, y, mass, vel, colour);
-        this.bounds = null;
         this.shape = new Polygon(new float[]{-50,50,60,0,-50,-50,-50,50});
         this.jet = new Polygon(new float[]{-50,30,-50,-30,-80,0,-50,30});
         jet.setPosition(pos.x,pos.y);
@@ -104,5 +100,14 @@ public class Player extends BasicShape {
      */
     public void setJet(boolean jet){
         this.jetbeam = true;
+    }
+
+    /**
+     * Returns the hitbox of the player.
+     *
+     * @return the hitbox of the player.
+     */
+    public final com.badlogic.gdx.math.Rectangle getHitbox() {
+        return shape.getBoundingRectangle();
     }
 }
