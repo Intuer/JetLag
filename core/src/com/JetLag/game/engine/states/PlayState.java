@@ -70,14 +70,14 @@ public class PlayState extends State {
         if ( Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ){
             gsm.push(new PauseState(gsm));
         }
-        if ( Gdx.input.isKeyPressed(Input.Keys.UP) ){
+        if ( Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) ){
             player.setVelocity(player.getVelocity().add(new Vector3((float) Math.cos(player.getRotateRad()), (float) Math.sin(player.getRotateRad()), 0).scl(0.3f)));
             player.setJet(true);
         }
-        if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) {
+        if ( Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D) ) {
             player.setRotate(player.getRotate() - 2);
         }
-        if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
+        if ( Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A) ) {
             player.setRotate(player.getRotate() +2 );
         }
     }
