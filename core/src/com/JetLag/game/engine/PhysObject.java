@@ -58,7 +58,7 @@ public abstract class PhysObject extends BasicObject {
     /**
      *
      */
-    public void setVelocity(int x, int y, int z) {
+    public void setVelocity(float x, float y, float z) {
         setVelocity(new Vector3(x, y, z));
     }
 
